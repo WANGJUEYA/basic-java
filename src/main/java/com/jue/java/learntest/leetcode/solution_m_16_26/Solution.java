@@ -1,6 +1,13 @@
-package com.jue.java.learntest.leetcode.solution0227;
+package com.jue.java.learntest.leetcode.solution_m_16_26;
 
 class Solution {
+    public static void main(String[] args) {
+//        System.out.println((new Solution()).calculate("3+2*2"));
+//        System.out.println((new Solution()).calculate("1-1+1"));
+//        System.out.println((new Solution()).calculate("0-1"));
+        System.out.println((new Solution()).calculate("22*3+4"));
+    }
+
     public int calculate(String s) {
         int len = s.length();
         // 使用栈计算
