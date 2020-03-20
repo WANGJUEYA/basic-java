@@ -1,11 +1,11 @@
-package com.jue.java.learntest.offeronline;
+package com.jue.java.learntest.offeronline.M_20200317_HW_B;
 
 /**
  * @author JUE
  * @date 2020/3/16
  * @note 0 error(s), 0 warning(s)
  **/
-public class M_20200317_HW_B {
+public class Main {
     /**
      * 日期转换: 给定哪年哪月第几周周几转出公历日期
      */
@@ -16,7 +16,7 @@ public class M_20200317_HW_B {
 //                System.out.println((new M_20200317_HW_B()).function(year, month, 1, 1));
 //            }
 //        }
-        System.out.println((new M_20200317_HW_B()).function(2018, 2, 3, 1));
+        System.out.println((new Main()).function(2018, 2, 3, 1));
 //        System.out.println((new M_20200317_HW_B()).function(2018, 2, 8, 1));
 //        for (int year = 2000; year < 2001; year++) {
 //            for (int month = 1; month <= 12; month++) {
@@ -26,7 +26,7 @@ public class M_20200317_HW_B {
 //            }
 //        }
 //        System.out.println((new M_20200317_HW_B()).function(2000, 3, 2, 1));
-        System.out.println((new M_20200317_HW_B()).function(2020, 3, 1, 7));
+        System.out.println((new Main()).function(2020, 3, 1, 7));
     }
 
     public String function(int year, int month, int week, int day) {

@@ -40,6 +40,30 @@
 #solution0169 多数元素 majority-element Easy
     给定一个大小为 n 的数组,找到其中的多数元素.多数元素是指在数组中出现次数大于 ⌊ n/2 ⌋ 的元素.
     你可以假设数组是非空的,并且给定的数组总是存在多数元素.
+#solution0175 组合两个表 combine-two-tables Easy @SQL
+    编写一个 SQL 查询，满足条件：无论 person 是否有地址信息，都需要基于上述两表提供 person 的以下信息：
+#solution0176 第二高的薪水 second-highest-salary Easy @SQL
+    例如上述 Employee 表，SQL查询应该返回 200 作为第二高的薪水。如果不存在第二高的薪水，那么查询应返回 null。
+#solution0177 第N高的薪水 nth-highest-salary Medium @SQL
+    例如上述 Employee 表，n = 2 时，应返回第二高的薪水 200。如果不存在第 n 高的薪水，那么查询应返回 null。
+#solution0178 分数排名 rank-scores Medium @SQL
+    编写一个 SQL 查询来实现分数排名。如果两个分数相同，则两个分数排名（Rank）相同。请注意，平分后的下一个名次应该是下一个连续的整数值。换句话说，名次之间不应该有“间隔”。
+#solution0180 连续出现的数字 consecutive-numbers Medium @SQL
+    编写一个 SQL 查询，查找所有至少连续出现三次的数字。
+#solution0181 超过经理收入的员工 employees-earning-more-than-their-managers Easy @SQL
+    Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。
+#solution0182 查找重复的电子邮箱 duplicate-emails Easy @SQL
+    编写一个 SQL 查询，查找 Person 表中所有重复的电子邮箱。
+#solution0183 从不订购的客户 customers-who-never-order Easy @SQL
+    某网站包含两个表，Customers 表和 Orders 表。编写一个 SQL 查询，找出所有从不订购任何东西的客户。
+#solution0184 部门工资最高的员工 department-highest-salary Medium @SQL
+    编写一个 SQL 查询，找出每个部门工资最高的员工。例如，根据上述给定的表格，Max 在 IT 部门有最高工资，Henry 在 Sales 部门有最高工资
+#solution0185 部门工资前三高的所有员工 department-top-three-salaries Hard @SQL
+    编写一个 SQL 查询，找出每个部门获得前三高工资的所有员工。例如，根据上述给定的表，查询结果应返回：
+#solution0196 删除重复的电子邮箱 delete-duplicate-emails Easy @SQL
+    编写一个 SQL 查询，来删除 Person 表中所有重复的电子邮箱，重复的邮箱里只保留 Id 最小 的那个。
+#solution0197 上升的温度 rising-temperature Easy @SQL
+    给定一个 Weather 表，编写一个 SQL 查询，来查找与之前（昨天的）日期相比温度更高的所有日期的 Id。
 #solution0200 岛屿数量 number-of-islands Medium
     给定一个由 '1'(陆地)和 '0'(水)组成的的二维网格,计算岛屿的数量.一个岛被水包围,并且它是通过水平方向或垂直方向上相邻的陆地连接而成的.你可以假设网格的四个边均被水包围.
 #solution0223 矩形面积 rectangle-area Medium
@@ -48,6 +72,9 @@
 #solution0227 基本计算器 II basic-calculator-ii Medium
     实现一个基本的计算器来计算一个简单的字符串表达式的值。
     字符串表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
+#solution0262 行程和用户 trips-and-users Hard @SQL
+    写一段 SQL 语句查出 2013年10月1日 至 2013年10月3日 期间非禁止用户的取消率。基于上表，你的 SQL 语句应返回如下结果，取消率（Cancellation Rate）保留两位小数。
+    取消率的计算方式如下：(被司机或乘客取消的非禁止用户生成的订单数量) / (非禁止用户生成的订单总数)
 #solution0279 完全平方数 perfect-squares Medium
     给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
 #solution0300 最长上升子序列 longest-increasing-subsequence Medium
@@ -57,16 +84,34 @@
     对于每个单元格，你可以往上，下，左，右四个方向移动。 你不能在对角线方向上移动或移动到边界外（即不允许环绕）。
 #solution0407 接雨水 II trapping-rain-water-ii Hard
     给定一个 m x n 的矩阵,其中的值均为正整数,代表二维高度图每个单元的高度,请计算图中形状最多能接多少体积的雨水.
+#solution0409 最长回文串 longest-palindrome Easy
+    给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。
+    在构造过程中，请注意区分大小写。比如 "Aa" 不能当做一个回文字符串。
+    注意:假设字符串的长度不会超过 1010。
 #solution0419 甲板上的战舰 battleships-in-a-board Medium
     给定一个二维的甲板, 请计算其中有多少艘战舰. 战舰用 'X'表示,空位用 '.'表示. 你需要遵守以下规则:
     给你一个有效的甲板,仅由战舰或者空位组成.
     战舰只能水平或者垂直放置.换句话说,战舰只能由 1xN (1 行, N 列)组成,或者 Nx1 (N 行, 1 列)组成,其中N可以是任意大小.
     两艘战舰之间至少有一个水平或垂直的空位分隔 - 即没有相邻的战舰.
-#solution0626 换座位 exchange-seats Medium
+#solution0595 大的国家 big-countries Easy @SQL
+    如果一个国家的面积超过300万平方公里，或者人口超过2500万，那么这个国家就是大国家。
+    编写一个SQL查询，输出表中所有大国家的名称、人口和面积。
+#solution0596 超过5名学生的课 classes-more-than-5-students Easy @SQL
+    请列出所有超过或等于5名学生的课。
+#solution0601 体育馆的人流量 human-traffic-of-stadium Hard @SQL
+    X 市建了一个新的体育馆，每日人流量信息被记录在这三列信息中：序号 (id)、日期 (visit_date)、 人流量 (people)。
+    请编写一个查询语句，找出人流量的高峰期。高峰期时，至少连续三行记录中的人流量不少于100。
+#solution0626 换座位 exchange-seats Medium @SQL
     小美是一所中学的信息科技老师,她有一张 seat 座位表,平时用来储存学生名字和与他们相对应的座位 id.
     其中纵列的 id 是连续递增的
     小美想改变相邻俩学生的座位.
     你能不能帮她写一个 SQL query 来输出小美想要的结果呢?
+#solution0620 有趣的电影 not-boring-movies Easy @SQL
+    某城市开了一家新的电影院，吸引了很多人过来看电影。该电影院特别注意用户体验，专门有个 LED显示板做电影推荐，上面公布着影评和相关电影描述。
+    作为该电影院的信息部主管，您需要编写一个 SQL查询，找出所有影片描述为非 boring (不无聊) 的并且 id 为奇数 的影片，结果请按等级 rating 排列。
+#solution0627 交换工资 swap-salary Easy @SQL
+    给定一个 salary 表，如下所示，有 m = 男性 和 f = 女性 的值。交换所有的 f 和 m 值（例如，将所有 f 值更改为 m，反之亦然）。要求只使用一个更新（Update）语句，并且没有中间的临时表。
+    注意，您必只能写一个 Update 语句，请不要编写任何 Select 语句。
 #solution0673 最长递增子序列的个数 number-of-longest-increasing-subsequence Medium
     给定一个未排序的整数数组,找到最长递增子序列的个数.
 #solution0677 键值映射 map-sum-pairs Medium
@@ -76,6 +121,37 @@
 #solution0695 岛屿的最大面积 max-area-of-island Medium
     给定一个包含了一些 0 和 1的非空二维数组 grid , 一个 岛屿 是由四个方向 (水平或垂直) 的 1 (代表土地) 构成的组合.你可以假设二维矩阵的四个边缘都被水包围着.
     找到给定的二维数组中最大的岛屿面积.(如果没有岛屿,则返回面积为0.)
+#solution0836 矩形重叠 rectangle-overlap Easy
+    矩形以列表 [x1, y1, x2, y2] 的形式表示，其中 (x1, y1) 为左下角的坐标，(x2, y2) 是右上角的坐标。 
+    如果相交的面积为正，则称两矩形重叠。需要明确的是，只在角或边接触的两个矩形不构成重叠。
+    给出两个矩形，判断它们是否重叠并返回结果。
+#solution0828 统计子串中的唯一字符 count-unique-characters-of-all-substrings-of-a-given-string Hard
+    我们定义了一个函数 countUniqueChars(s) 来统计字符串 s 中的唯一字符，并返回唯一字符的个数。
+    例如：s = "LEETCODE" ，则其中 "L", "T","C","O","D" 都是唯一字符，因为它们只出现一次，所以 countUniqueChars(s) = 5 。
+    本题将会给你一个字符串 s ，我们需要返回 countUniqueChars(t) 的总和，其中 t 是 s 的子字符串。注意，某些子字符串可能是重复的，但你统计时也必须算上这些重复的子字符串（也就是说，你必须统计 s 的所有子字符串中的唯一字符）。
+    由于答案可能非常大，请将结果 mod 10 ^ 9 + 7 后再返回。
+#solution0829 连续整数求和 consecutive-numbers-sum Hard
+    给定一个正整数 N，试求有多少组连续正整数满足所有数字之和为 N?
+#solution0830 较大分组的位置 positions-of-large-groups Easy
+    在一个由小写字母构成的字符串 S 中，包含由一些连续的相同字符所构成的分组。
+    例如，在字符串 S = "abbxxxxzyy" 中，就含有 "a", "bb", "xxxx", "z" 和 "yy" 这样的一些分组。
+    我们称所有包含大于或等于三个连续字符的分组为较大分组。找到每一个较大分组的起始和终止位置。
+    最终结果按照字典顺序输出。
+#solution0831 隐藏个人信息 masking-personal-information Medium
+    给你一条个人信息 string S，它可能是一个邮箱地址，也可能是一个电话号码。
+    我们将隐藏它的隐私信息，通过如下规则:
+    <u>1. 电子邮箱</u>
+    定义名称 <name> 是长度大于等于 2 （length ≥ 2），并且只包含小写字母 a-z 和大写字母 A-Z 的字符串。
+    电子邮箱地址由名称 <name> 开头，紧接着是符号 <font face="Menlo, Monaco, Consolas, Courier New, monospace">'@'</font>，后面接着一个名称 <name>，再接着一个点号 '.'，然后是一个名称 <name>。
+    电子邮箱地址确定为有效的，并且格式是 "name1@name2.name3"。
+    为了隐藏电子邮箱，所有的名称 <name> 必须被转换成小写的，并且第一个名称 <name> 的第一个字母和最后一个字母的中间的所有字母由 5 个 '*' 代替。
+    <u>2. 电话号码</u>
+    电话号码是一串包括数字 0-9，以及 {'+', '-', '(', ')', ' '} 这几个字符的字符串。你可以假设电话号码包含 10 到 13 个数字。
+    电话号码的最后 10 个数字组成本地号码，在这之前的数字组成国际号码。注意，国际号码是可选的。我们只暴露最后 4 个数字并隐藏所有其他数字。
+    本地号码是有格式的，并且如 "***-***-1111" 这样显示，这里的 1 表示暴露的数字。
+    为了隐藏有国际号码的电话号码，像 "+111 111 111 1111"，我们以 "+***-***-***-1111" 的格式来显示。在本地号码前面的 '+' 号和第一个 '-' 号仅当电话号码中包含国际号码时存在。例如，一个 12 位的电话号码应当以 "+**-" 开头进行显示。
+    注意：像 "("，")"，" " 这样的不相干的字符以及不符合上述格式的额外的减号或者加号都应当被删除。
+    最后，将提供的信息正确隐藏后返回。
 #solution0860 柠檬水找零 lemonade-change Easy
     在柠檬水摊上,每一杯柠檬水的售价为 5 美元.
     顾客排队购买你的产品,(按账单 bills 支付的顺序)一次购买一杯.
@@ -101,6 +177,11 @@
 #solution1071 字符串的最大公因子 greatest-common-divisor-of-strings Easy
     对于字符串 S 和 T,只有在 S = T + ... + T(T 与自身连接 1 次或多次)时,我们才认定 "T 能除尽 S".
     返回最长字符串 X,要求满足 X 能除尽 str1 且 X 能除尽 str2.
+#solution1160 拼写单词 find-words-that-can-be-formed-by-characters Easy
+    给你一份『词汇表』（字符串数组） words 和一张『字母表』（字符串） chars。
+    假如你可以用 chars 中的『字母』（字符）拼写出 words 中的某个『单词』（字符串），那么我们就认为你掌握了这个单词。
+    注意：每次拼写时，chars 中的每个字母都只能用一次。
+    返回词汇表 words 中你掌握的所有单词的 长度之和。
 #solution1306 跳跃游戏 III jump-game-iii Medium
     这里有一个非负整数数组 arr，你最开始位于该数组的起始下标 start 处。当你位于下标 i 处时，你可以跳到 i + arr[i] 或者 i - arr[i]。
     请你判断自己是否能够跳到对应元素值为 0 的 任意 下标处。
@@ -134,3 +215,5 @@
 #solution_m_16_26 计算器 calculator-lcci Medium [= solution0227]
     给定一个包含正整数、加(+)、减(-)、乘(*)、除(/)的算数表达式(括号除外)，计算其结果。
     表达式仅包含非负整数，+， - ，*，/ 四种运算符和空格  。 整数除法仅保留整数部分。
+#solution_m_40_00 最小的k个数 zui-xiao-de-kge-shu-lcof Easy
+    输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
