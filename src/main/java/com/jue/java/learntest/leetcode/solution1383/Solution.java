@@ -1,4 +1,4 @@
-package com.jue.java.learntest.leetcode.solution5359;
+package com.jue.java.learntest.leetcode.solution1383;
 
 
 import java.util.Arrays;

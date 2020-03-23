@@ -1,4 +1,4 @@
-package com.jue.java.learntest.leetcode.solution5179;
+package com.jue.java.learntest.leetcode.solution1382;
 
 import com.jue.java.learntest.tooffer.bean.TreeNode;
 
