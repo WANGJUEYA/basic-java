@@ -1,4 +1,4 @@
-package com.jue.java.learntest.leetcode.solution0121;
+package com.jue.java.learntest.leetcode.solution_m_63_00;
 
 class Solution {
     public int maxProfit(int[] prices) {
