@@ -28,12 +28,17 @@
     在任何情况下, 若函数不能进行有效的转换时, 请返回 0,
 #solution0009 回文数 palindrome-number Easy
     判断一个整数是否是回文数.回文数是指正序(从左向右)和倒序(从右向左)读都是一样的整数.
+#solution0014 最长公共前缀 longest-common-prefix Easy
+    编写一个函数来查找字符串数组中的最长公共前缀. 
+    如果不存在公共前缀, 返回空字符串 "". 
 #solution0015 三数之和 3sum Medium
     给定一个包含 n 个整数的数组 nums,判断 nums 中是否存在三个元素 a,b,c,使得 a + b + c = 0?找出所有满足条件且不重复的三元组.
     注意: 答案中不可以包含重复的三元组.
 #solution0017 电话号码的字母组合 letter-combinations-of-a-phone-number Medium
     给定一个仅包含数字 2-9 的字符串,返回所有它能表示的字母组合.
     给出数字到字母的映射如下(与电话按键相同).注意 1 不对应任何字母.
+#solution0022 括号生成 generate-parentheses Medium
+    数字 n 代表生成括号的对数, 请你设计一个函数, 用于能够生成所有可能的并且 有效的 括号组合. 
 #solution0042 接雨水 trapping-rain-water Hard
     给定 n 个非负整数表示每个宽度为 1 的柱子的高度图, 计算按此排列的柱子, 下雨之后能接多少雨水.
 #solution0046 全排列 permutations Medium
@@ -60,6 +65,8 @@
     给定一个数组, 它的第 i 个元素是一支给定股票第 i 天的价格. 
     如果你最多只允许完成一笔交易(即买入和卖出一支股票一次), 设计一个算法来计算你所能获取的最大利润. 
     注意: 你不能在买入股票前卖出股票. 
+#solution0151 翻转字符串里的单词 reverse-words-in-a-string Medium
+    给定一个字符串, 逐个翻转字符串中的每个单词. 
 #solution0168 Excel表列名称 excel-sheet-column-title Easy
     给定一个正整数,返回它在 Excel 表中相对应的列名称.
 #solution0169 多数元素 majority-element Easy
@@ -130,6 +137,12 @@
 #solution0329 矩阵中的最长递增路径 longest-increasing-path-in-a-matrix Hard
     给定一个整数矩阵,找出最长递增路径的长度.
     对于每个单元格,你可以往上,下,左,右四个方向移动. 你不能在对角线方向上移动或移动到边界外(即不允许环绕).
+#solution0355 设计推特 design-twitter Medium
+    设计一个简化版的推特(Twitter), 可以让用户实现发送推文, 关注/取消关注其他用户, 能够看见关注人（包括自己）的最近十条推文. 你的设计需要支持以下的几个功能: 
+    postTweet(userId, tweetId): 创建一条新的推文
+    getNewsFeed(userId): 检索最近的十条推文. 每个推文都必须是由此用户关注的人或者是用户自己发出的. 推文必须按照时间顺序由最近的开始排序. 
+    follow(followerId, followeeId): 关注一个用户
+    unfollow(followerId, followeeId): 取消关注一个用户
 #solution0365 水壶问题 water-and-jug-problem Medium
     有两个容量分别为 x升 和 y升 的水壶以及无限多的水.请判断能否通过使用这两个水壶,从而可以得到恰好 z升 的水?
     如果可以,最后请用以上水壶中的一或两个来盛放取得的 z升 水.
@@ -446,6 +459,13 @@
 #solution_m_01_07 旋转矩阵 rotate-matrix-lcci Medium
     给你一幅由 N × N 矩阵表示的图像, 其中每个像素的大小为 4 字节. 请你设计一种算法, 将图像旋转 90 度. 
     不占用额外内存空间能否做到? 
+#solution_m_13_00 机器人的运动范围 ji-qi-ren-de-yun-dong-fan-wei-lcof Medium
+    地上有一个m行n列的方格, 从坐标 [0,0] 到坐标 [m-1,n-1]. 一个机器人从坐标 [0, 0] 的格子开始移动, 
+    它每次可以向左、右、上、下移动一格(不能移动到方格外), 也不能进入行坐标和列坐标的数位之和大于k的格子. 
+    例如, 当k为18时, 机器人能够进入方格 [35, 37] , 因为3+5+3+7=18. 但它不能进入方格 [35, 38], 因为3+5+3+8=19. 请问该机器人能够到达多少个格子? 
+#solution_m_16_03 交点 intersection-lcci Hard
+    给定两条线段（表示为起点start = {X1, Y1}和终点end = {X2, Y2}）, 如果它们有交点, 请计算其交点, 没有交点则返回空值. 
+    要求浮点型误差不超过10^-6. 若有多个交点（线段重叠）则返回 X 值最小的点, X 坐标相同则返回 Y 值最小的点. 
 #solution_m_16_25 LRU缓存 lru-cache-lcci Medium
     设计和构建一个"最近最少使用"缓存,该缓存会删除最近最少使用的项目.缓存应该从键映射到值(允许你插入和检索特定键对应的值),
     并在初始化时指定最大容量.当缓存被填满时,它应该删除最近最少使用的项目.

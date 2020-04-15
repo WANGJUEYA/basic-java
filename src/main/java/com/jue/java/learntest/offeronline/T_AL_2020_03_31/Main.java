@@ -7,7 +7,7 @@ import java.util.Stack;
  * @date 2020/3/31
  * @note 0 error(s), 0 warning(s)
  **/
-public class T_AL_2020_03_31 {
+public class Main {
     /**
      * 已知一个int数组A[] = {1,2,-2,-1,3,-3}，且数组元素中不包含0。假设正数表示“装货”，负数表示“卸货”，元素的绝对值表示商品的编号，
      * 例如1和-1分别表示对商品1进行装货和卸货，且数组中元素的
