@@ -73,6 +73,7 @@ public class StringToIntegerAtoi {
 //        System.out.println(solution.myAtoi("-000000000000001"));
 //        System.out.println(solution.myAtoi("2147483648"));
         System.out.println(solution.myAtoi(" 1175109307q7"));
+        System.out.println(solution.myAtoi(" 0000000000012345678"));
     }
 }
 
@@ -95,30 +96,24 @@ class Solution {
             index++;
         }
         int result = 0;
-        int count = 0;
         while (index < len && '0' <= str.charAt(index) && '9' >= str.charAt(index)) {
             int temp = str.charAt(index) - '0';
-            if (count > 8) {
-                if (flag > 0) {
-                    if (Integer.MAX_VALUE / 10 >= result && Integer.MAX_VALUE % 10 > temp) {
-                        result = result * 10 + temp;
-                    } else {
-                        return Integer.MAX_VALUE;
-                    }
+            index++;
+            if (flag > 0) {
+                int max = Integer.MAX_VALUE / 10;
+                if ((max > result) || (max == result && Integer.MAX_VALUE % 10 > temp)) {
+                    result = result * 10 + temp;
                 } else {
-                    if (Integer.MIN_VALUE / 10 <= -result && Integer.MAX_VALUE + result * 10 < -temp) {
-                        result = result * 10 + temp;
-                    } else {
-                        return Integer.MIN_VALUE;
-                    }
+                    return Integer.MAX_VALUE;
                 }
             } else {
-                result = result * 10 + temp;
+                int min = Integer.MIN_VALUE / 10;
+                if ((min < -result) || (min == -result && Integer.MIN_VALUE + result * 10 < -temp)) {
+                    result = result * 10 + temp;
+                } else {
+                    return Integer.MIN_VALUE;
+                }
             }
-            if (count > 0 || result > 0) {
-                count++;
-            }
-            index++;
         }
         return flag * result;
     }
