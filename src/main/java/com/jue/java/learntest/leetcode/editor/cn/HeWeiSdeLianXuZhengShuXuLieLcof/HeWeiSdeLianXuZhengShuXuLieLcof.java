@@ -31,9 +31,7 @@
 package com.jue.java.learntest.leetcode.editor.cn.HeWeiSdeLianXuZhengShuXuLieLcof;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JUE
@@ -54,23 +52,20 @@ class Solution {
         if (target <= 2) {
             return new int[0][0];
         }
-        // 先计算每一个n项 n最大不超过 2*target 开方项
-        Map<Integer, Integer> mules = new HashMap<>();
-        int n = 1;
-        do {
-            n++;
-            mules.put(n * (n - 1), n);
-        } while (n * n < target * 2);
-        // 等差方程 a1 + 0.5*n*(n-1) = target
-        for (int index = 1; index < target; index++) {
-            int mul = 2 * (target - index);
-            if (mules.containsKey(mul)) {
-                int num = mules.get(mul);
-                int[] temp = new int[num];
-                for (int j = 0, v = index; j < num; j++, v++) {
-                    temp[j] = v;
+        // a1*n+[n*(n-1)*d]/2  (a1 + an) * n / 2 = target
+        for (int index = 1; index <= target / 2; index++) {
+            int sum = index;
+            for (int j = index + 1; sum <= target; j++) {
+                if (sum == target) {
+                    int[] temp = new int[j - index];
+                    int i = index;
+                    int top = 0;
+                    while (i < j) {
+                        temp[top++] = i++;
+                    }
+                    list.add(temp);
                 }
-                list.add(temp);
+                sum += j;
             }
         }
         int[][] result = new int[list.size()][];
