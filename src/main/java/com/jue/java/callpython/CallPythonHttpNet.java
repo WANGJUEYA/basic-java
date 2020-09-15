@@ -1,6 +1,7 @@
 package com.jue.java.callpython;
 
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -101,7 +102,7 @@ public class CallPythonHttpNet {
      * @param json
      * @return
      */
-    public static String doPost(String url, JSONObject json) {
+    public static String doPost(String url, ObjectNode json) {
         HttpClient httpClient = new HttpClient();
         PostMethod postMethod = new PostMethod(url);
 
@@ -113,8 +114,8 @@ public class CallPythonHttpNet {
         postMethod.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.81 Safari/537.36");
         //添加请求参数
         // postMethod.addParameter("commentId", json.getString("commentId"));
-        postMethod.addParameter("a", json.getString("a"));
-        postMethod.addParameter("b", json.getString("b"));
+        postMethod.addParameter("a", json.get("a").textValue());
+        postMethod.addParameter("b", json.get("b").textValue());
 
         String res = "";
         try {
@@ -135,7 +136,8 @@ public class CallPythonHttpNet {
         System.out.println("-----------分割线------------");
         System.out.println("-----------分割线------------");
 
-        JSONObject jsonObject = new JSONObject();
+        JsonNodeFactory factory = JsonNodeFactory.instance;
+        ObjectNode jsonObject = new ObjectNode(factory);
         jsonObject.put("a", 4);
         jsonObject.put("b", 5);
         doPost("http://127.0.0.1:8832/post", jsonObject);
