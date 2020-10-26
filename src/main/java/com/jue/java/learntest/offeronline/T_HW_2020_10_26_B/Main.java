@@ -1,6 +1,8 @@
 package com.jue.java.learntest.offeronline.T_HW_2020_10_26_B;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author JUE
@@ -13,8 +15,11 @@ public class Main {
         // TODO 是否考虑括号不完整???
         // 目前看到所有不合法的坐标均为0开头
         Scanner in = new Scanner(System.in);
-        // TODO 使用正则表达式
-        // Pattern.compile("\\((\\d*)\\,(\\d*)\\)").matcher("ferg(1,2)qwew(23,4)");
+        // 使用正则表达式
+//        Matcher matcher = Pattern.compile("(\\(\\d*,\\d*\\))").matcher("ferg(1,2)qwew(23,4)");
+//        while (matcher.find()) {
+//            System.out.println(matcher.group(0));
+//        }
         String line = in.nextLine();
         int X = 0;
         int Y = 0;
