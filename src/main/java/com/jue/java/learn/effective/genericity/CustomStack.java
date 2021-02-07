@@ -1,4 +1,4 @@
-package com.jue.java.learntest.effective.genericity;
+package com.jue.java.learn.effective.genericity;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;

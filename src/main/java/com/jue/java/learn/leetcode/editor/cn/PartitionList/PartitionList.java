@@ -14,9 +14,9 @@
 // 👍 335 👎 0
 
 
-package com.jue.java.learntest.leetcode.editor.cn.PartitionList;
+package com.jue.java.learn.leetcode.editor.cn.PartitionList;
 
-import com.jue.java.learntest.tooffer.bean.ListNode;
+import com.jue.java.learn.tooffer.bean.ListNode;
 
 /**
  * @author JUE

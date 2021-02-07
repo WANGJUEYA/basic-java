@@ -1,4 +1,4 @@
-package com.jue.java.learntest.tooffer.bean;
+package com.jue.java.learn.tooffer.bean;
 
 /**
  * @author JUE
