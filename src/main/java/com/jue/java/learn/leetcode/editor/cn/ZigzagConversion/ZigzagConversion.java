@@ -41,13 +41,40 @@ package com.jue.java.learn.leetcode.editor.cn.ZigzagConversion;
 public class ZigzagConversion {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.convert("LEETCODEISHIRING", 3));
-        System.out.println(solution.convert("AB", 1));
+        System.out.println(solution.convert("LEETCODEISHIRING", 3).equals("LCIRETOESIIGEDHN"));
+        System.out.println(solution.convert("LEETCODEISHIRING", 4).equals("LDREOEIIECIHNTSG"));
+        System.out.println(solution.convert("AB", 1).equals("AB"));
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    public String convert(String s, int numRows) {
+        int len = s.length();
+        int step = 2 * numRows - 2;
+        if (step == 0) {
+            return s;
+        }
+        StringBuilder result = new StringBuilder();
+        for (int row = 0; row < numRows; row++) {
+            int index = row;
+            while (index < len + step - 1) {
+                if (row > 0 && row < numRows - 1 && index > step && index - 2 * row > 0 && index - 2 * row < len) {
+                    result.append(s.charAt(index - 2 * row));
+                }
+                if (index < len) {
+                    result.append(s.charAt(index));
+                }
+                index += step;
+            }
+        }
+        return result.toString();
+    }
+}
+//leetcode submit region end(Prohibit modification and deletion)
+
+
+class SolutionNo1 {
     public String convert(String s, int numRows) {
         int len = s.length();
         if (len <= 1 || numRows <= 1) {
@@ -75,5 +102,4 @@ class Solution {
         return result.toString();
     }
 }
-//leetcode submit region end(Prohibit modification and deletion)
 
