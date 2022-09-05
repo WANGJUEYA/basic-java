@@ -94,24 +94,23 @@ class Solution {
     private Map<Integer, Integer> count = new HashMap<>();
     private List<TreeNode> result = new ArrayList<>();
 
-    private String sort(TreeNode root) {
+    private int sort(TreeNode root) {
         if (root == null) {
-            return "";
+            return 0;
         }
-        String left = sort(root.left);
-        String right = sort(root.right);
+        int left = sort(root.left);
+        int right = sort(root.right);
         // 前序遍历(只存储中序遍历的hash值 - 防止内存溢出)
         String pre = root.val + "-" + left + "-" + right;
         String mid = left + "-" + root.val + "-" + right;
-        String str = "+" + pre + "#" + mid.hashCode() + "+";
         // 默认hash不重复
-        int hash = str.hashCode();
+        int hash = (pre + mid).hashCode();
         count.put(hash, count.getOrDefault(hash, 0) + 1);
         // System.out.println(str);
         if (count.get(hash) == 2) {
             this.result.add(root);
         }
-        return str;
+        return hash;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
