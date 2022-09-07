@@ -57,9 +57,10 @@ import java.util.Map;
 public class CountUniqueCharactersOfAllSubstringsOfAGivenString {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.uniqueLetterString("ABC"));
-        System.out.println(solution.uniqueLetterString("ABA"));
-        System.out.println(solution.uniqueLetterString("LEETCODE"));
+        System.out.println(solution.uniqueLetterString("ABC")); // 10
+        System.out.println(solution.uniqueLetterString("ABA")); // 8
+        System.out.println(solution.uniqueLetterString("LEETCODE")); // 92
+        System.out.println(solution.uniqueLetterString("IECIYJSQHMDHQPCOTCQTVYEQMEYGGVPBUPKVHAAGBQKAQQVMWTMZZSEGTYWTBCNOWPWIBFDGVPHJYBMXFGSEQHNYAOHCPRJGARZA")); // 33362
     }
 }
 
@@ -85,3 +86,40 @@ class Solution {
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
+
+class Solution_Timeout {
+    public int uniqueLetterString(String s) {
+        int len = s.length();
+        // 暴力肯定不行， 借助滑动窗口和dp, 最长窗口大小为 26， 共有26个字符串
+        int[][] count_item = new int[len][27];
+        // 结果值
+        int count = 0;
+        for (int index = 0; index < len; index++) {
+            int ci = s.charAt(index) - 'A';
+            for (int win = 0; win < len; win++) {
+                count_item[win][ci]++;
+                if (count_item[win][ci] == 1) {
+                    count_item[win][26]++;
+                } else if (count_item[win][ci] == 2) {
+                    count_item[win][26]--;
+                }
+                if (index > win) {
+                    // 大于窗口大小, 每个窗口需要减去最左边的数据
+                    // 窗口扔掉最左边
+                    int li = s.charAt(index - win - 1) - 'A';
+                    count_item[win][li]--;
+                    if (count_item[win][li] == 1) {
+                        count_item[win][26]++;
+                    } else if (count_item[win][li] == 0) {
+                        count_item[win][26]--;
+                    }
+                }
+                // 如果开始计算窗口值
+                if (index >= win) {
+                    count += count_item[win][26];
+                }
+            }
+        }
+        return count;
+    }
+}
