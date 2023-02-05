@@ -95,11 +95,6 @@ class Solution {
             int[] current = queue.poll();
             int row = current[0], col = current[1], end = current[2], count = current[3];
             System.out.printf("[%s,%s]: %s; %s%n", row, col, POSITION[end], count);
-            if (row == 0 && col == 1 && end == 0) {
-                countMove[0][1][0] = 1; // 首位是特例!
-            } else {
-                countMove[row][col][end] = count;
-            }
             // 问题: 会倒退一步吗? 暂定不计算倒退一步; 暂定头和尾可以同时垂直平移
             // 删除了向左和向上的处理
             // 四个位置展开
@@ -108,105 +103,45 @@ class Solution {
                     // 如果没有障碍，则向右移动一个单元格。并仍然保持身体的水平／竖直状态。
                     if (col < n - 1 && grid[row][col + 1] == 0) {
                         // System.out.printf("next [%s,%s]: %s; %s%n", row, col + 1, POSITION[end], countMove[row][col + 1][end]);
-                        if (countMove[row][col + 1][end] == 0) {
-                            queue.add(new int[]{row, col + 1, end, count + 1});
-                        }
+                        push(queue, countMove, row, col + 1, end, count);
                     }
-//                    // 如果没有障碍，则向`上`移动一个单元格。并仍然保持身体的水平／竖直状态。
-//                    if (row > 0 && grid[row - 1][col] == 0 && grid[row - 1][col - 1] == 0) {
-//                        if (countMove[row - 1][col][end] == 0) {
-//                            queue.add(new int[]{row - 1, col, end, count + 1});
-//                        }
-//                    }
                     // 如果没有障碍，则向下移动一个单元格。并仍然保持身体的水平／竖直状态。
                     if (row < n - 1 && grid[row + 1][col] == 0 && grid[row + 1][col - 1] == 0) {
-                        if (countMove[row + 1][col][end] == 0) {
-                            queue.add(new int[]{row + 1, col, end, count + 1});
-                        }
+                        push(queue, countMove, row + 1, col, end, count);
                     }
                     // 如果它处于水平状态并且其下面的两个单元都是空的，就顺时针旋转 90 度。蛇从（(r, c)、(r, c+1)）移动到 （(r, c)、(r+1, c)）。
                     if (row < n - 1 && grid[row + 1][col] == 0 && grid[row + 1][col - 1] == 0) {
-                        if (countMove[row + 1][col - 1][1] == 0) {
-                            queue.add(new int[]{row + 1, col - 1, 1, count + 1});
-                        }
+                        push(queue, countMove, row + 1, col - 1, 1, count);
                     }
                     break;
                 case 1:
                     // 如果没有障碍，则向下移动一个单元格。并仍然保持身体的水平／竖直状态。
                     if (row < n - 1 && grid[row + 1][col] == 0) {
-                        if (countMove[row + 1][col][end] == 0) {
-                            queue.add(new int[]{row + 1, col, end, count + 1});
-                        }
+                        push(queue, countMove, row + 1, col, end, count);
                     }
                     // 如果没有障碍，则向右移动一个单元格。并仍然保持身体的水平／竖直状态。
                     if (col < n - 1 && grid[row][col + 1] == 0 && grid[row - 1][col + 1] == 0) {
-                        if (countMove[row][col + 1][end] == 0) {
-                            queue.add(new int[]{row, col + 1, end, count + 1});
-                        }
+                        push(queue, countMove, row, col + 1, end, count);
                     }
-//                    // 如果没有障碍，则向`左`移动一个单元格。并仍然保持身体的水平／竖直状态。
-//                    if (col > 0 && grid[row][col - 1] == 0 && grid[row - 1][col - 1] == 0) {
-//                        if (countMove[row][col - 1][end] == 0) {
-//                            queue.add(new int[]{row, col - 1, end, count + 1});
-//                        }
-//                    }
                     // 如果它处于竖直状态并且其右面的两个单元都是空的，就逆时针旋转 90 度。蛇从（(r, c)、(r+1, c)）移动到（(r, c)、(r, c+1)）。
                     if (col < n - 1 && grid[row][col + 1] == 0 && grid[row - 1][col + 1] == 0) {
-                        if (countMove[row - 1][col + 1][0] == 0) {
-                            queue.add(new int[]{row - 1, col + 1, 0, count + 1});
-                        }
+                        push(queue, countMove, row - 1, col + 1, 0, count);
                     }
                     break;
                 case 2:
-//                    // 如果没有障碍，则向`上`移动一个单元格。并仍然保持身体的水平／竖直状态。
-//                    if (row > 0 && grid[row - 1][col] == 0 && grid[row - 1][col + 1] == 0) {
-//                        if (countMove[row - 1][col][end] == 0) {
-//                            queue.add(new int[]{row - 1, col, end, count + 1});
-//                        }
-//                    }
                     // 如果没有障碍，则向下移动一个单元格。并仍然保持身体的水平／竖直状态。
                     if (row < n - 1 && grid[row + 1][col] == 0 && grid[row + 1][col + 1] == 0) {
-                        if (countMove[row + 1][col][end] == 0) {
-                            queue.add(new int[]{row + 1, col, end, count + 1});
-                        }
+                        push(queue, countMove, row + 1, col, end, count);
                     }
-//                    // 如果没有障碍，则向`左`移动一个单元格。并仍然保持身体的水平／竖直状态。
-//                    if (col > 0 && grid[row][col - 1] == 0) {
-//                        if (countMove[row][col - 1][end] == 0) {
-//                            queue.add(new int[]{row, col - 1, end, count + 1});
-//                        }
-//                    }
-//                    // 如果它处于水平状态并且其`上`面的两个单元都是空的，就顺时针旋转 90 度。蛇从（(r, c)、(r, c+1)）移动到 （(r, c)、(r+1, c)）。
-//                    if (row < n - 1 && grid[row + 1][col] == 0 && grid[row + 1][col - 1] == 0) {
-//                        if (countMove[row - 1][col - 1][3] == 0) {
-//                            queue.add(new int[]{row - 1, col - 1, 3, count + 1});
-//                        }
-//                    }
                     break;
                 case 3:
-//                    // 如果没有障碍，则向`上`移动一个单元格。并仍然保持身体的水平／竖直状态。
-//                    if (row > 0 && grid[row - 1][col] == 0) {
-//                        if (countMove[row - 1][col][end] == 0) {
-//                            queue.add(new int[]{row - 1, col, end, count + 1});
-//                        }
-//                    }
                     // 如果没有障碍，则向右移动一个单元格。并仍然保持身体的水平／竖直状态。
                     if (col < n - 1 && grid[row][col + 1] == 0 && grid[row + 1][col + 1] == 0) {
-                        if (countMove[row][col + 1][end] == 0) {
-                            queue.add(new int[]{row, col + 1, end, count + 1});
-                        }
+                        push(queue, countMove, row, col + 1, end, count);
                     }
-//                    // 如果没有障碍，则向`左`移动一个单元格。并仍然保持身体的水平／竖直状态。
-//                    if (col > 0 && grid[row][col - 1] == 0 && grid[row + 1][col - 1] == 0) {
-//                        if (countMove[row][col - 1][end] == 0) {
-//                            queue.add(new int[]{row, col - 1, end, count + 1});
-//                        }
-//                    }
                     // 如果它处于竖直状态并且其`左`面的两个单元都是空的，就逆时针旋转 90 度。蛇从（(r, c)、(r+1, c)）移动到（(r, c)、(r, c+1)）。
                     if (col > 0 && grid[row][col - 1] == 0 && grid[row + 1][col - 1] == 0) {
-                        if (countMove[row + 1][col - 1][2] == 0) {
-                            queue.add(new int[]{row + 1, col - 1, 2, count + 1});
-                        }
+                        push(queue, countMove, row + 1, col - 1, 2, count);
                     }
                     break;
                 default:
@@ -216,6 +151,17 @@ class Solution {
         // 移动到 (n-1, n-2) 和 (n-1, n-1) count[n-1][n-1][0];
         int result = countMove[n - 1][n - 1][0];
         return result == 0 ? -1 : result;
+    }
+
+    public void push(Queue<int[]> queue, int[][][] countMove, int row, int col, int end, int count) {
+        if (countMove[row][col][end] == 0) {
+            if (row == 0 && col == 1 && end == 0) {
+                countMove[0][1][0] = 1; // 首位是特例!
+            } else {
+                countMove[row][col][end] = count + 1;
+            }
+            queue.add(new int[]{row, col, end, count + 1});
+        }
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
