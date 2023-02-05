@@ -94,7 +94,7 @@ class Solution {
         while (!queue.isEmpty()) {
             int[] current = queue.poll();
             int row = current[0], col = current[1], end = current[2], count = current[3];
-            System.out.printf("[%s,%s]: %s; %s%n", row, col, POSITION[end], count);
+            // System.out.printf("[%s,%s]: %s; %s%n", row, col, POSITION[end], count);
             // 问题: 会倒退一步吗? 暂定不计算倒退一步; 暂定头和尾可以同时垂直平移
             // 删除了向左和向上的处理
             // 四个位置展开
@@ -126,22 +126,6 @@ class Solution {
                     // 如果它处于竖直状态并且其右面的两个单元都是空的，就逆时针旋转 90 度。蛇从（(r, c)、(r+1, c)）移动到（(r, c)、(r, c+1)）。
                     if (col < n - 1 && grid[row][col + 1] == 0 && grid[row - 1][col + 1] == 0) {
                         push(queue, countMove, row - 1, col + 1, 0, count);
-                    }
-                    break;
-                case 2:
-                    // 如果没有障碍，则向下移动一个单元格。并仍然保持身体的水平／竖直状态。
-                    if (row < n - 1 && grid[row + 1][col] == 0 && grid[row + 1][col + 1] == 0) {
-                        push(queue, countMove, row + 1, col, end, count);
-                    }
-                    break;
-                case 3:
-                    // 如果没有障碍，则向右移动一个单元格。并仍然保持身体的水平／竖直状态。
-                    if (col < n - 1 && grid[row][col + 1] == 0 && grid[row + 1][col + 1] == 0) {
-                        push(queue, countMove, row, col + 1, end, count);
-                    }
-                    // 如果它处于竖直状态并且其`左`面的两个单元都是空的，就逆时针旋转 90 度。蛇从（(r, c)、(r+1, c)）移动到（(r, c)、(r, c+1)）。
-                    if (col > 0 && grid[row][col - 1] == 0 && grid[row + 1][col - 1] == 0) {
-                        push(queue, countMove, row + 1, col - 1, 2, count);
                     }
                     break;
                 default:
