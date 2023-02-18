@@ -50,6 +50,9 @@
 
 package com.jue.java.learn.leetcode.editor.cn.ContinuousSubarraySum;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author JUE
  * @number 523
@@ -67,10 +70,55 @@ public class ContinuousSubarraySum {
 class Solution {
     public boolean checkSubarraySum(int[] nums, int k) {
         // 同余定理 哈希表 简化前缀和
+        // 尝试用前缀和计算
+        int len = nums.length;
+
+        // 从头到尾的
+        Map<Integer, Integer> modIndex = new HashMap<>();
+        // 连续两个0可以通过
+        modIndex.put(0, -1);
+        int last = 0;
+        for (int index = 0; index < len; index++) {
+            last = (nums[index] + last) % k;
+            if (modIndex.containsKey(last)) {
+                if (index - modIndex.get(last) >= 2) {
+                    return true;
+                }
+            } else {
+                modIndex.put(last, index);
+            }
+        }
         return false;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
+
+class Solution_TimeOutNew {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        // 同余定理 哈希表 简化前缀和
+        // 尝试用前缀和计算
+        int len = nums.length;
+
+        // 从头到尾的
+        int[] sum = new int[len + 1];
+        sum[1] = nums[0];
+        for (int index = 2; index <= len; index++) {
+            sum[index] = (nums[index - 1] + sum[index - 1]) % k;
+            if (sum[index] == 0) {
+                return true;
+            }
+        }
+        // 滑动窗口
+        for (int end = len; end > 1; end--) {
+            for (int begin = end - 2; begin > 0; begin--) {
+                if ((sum[end] - sum[begin]) % k == 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
 
 class Solution_TimeOut {
     public boolean checkSubarraySum(int[] nums, int k) {
