@@ -39,8 +39,28 @@ class Solution {
     public int mySqrt(int x) {
         // 1. 袖珍计算器 利用指数和对数代替平方根
         // 2. 二分查找的解
-        // 3.
-        return 0;
+        if (x == 0) {
+            return 0;
+        } else if (x < 4) {
+            return 1;
+        } else if (x == 4) {
+            return 2;
+        }
+        // 由于是去尾法, 不是四舍五入，即求平方小于x的最大值
+        // 大数平方不好算, 最大是 2^31, 即2*16 = 1024 * 64 =
+        int l = 2, h = x / 2;
+        while (l < h) {
+            int mid = (l + h + 1) / 2; // 取上整
+            long count = (long) mid * mid;
+            if (count == x) {
+                return mid;
+            } else if (count > x) {
+                h = mid - 1;
+            } else {
+                l = mid;
+            }
+        }
+        return l;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

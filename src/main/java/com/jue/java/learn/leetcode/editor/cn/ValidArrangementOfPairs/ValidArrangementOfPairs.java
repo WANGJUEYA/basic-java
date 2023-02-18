@@ -69,17 +69,71 @@ import java.util.*;
 public class ValidArrangementOfPairs {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{5, 1}, {4, 5}, {11, 9}, {9, 4}})));
-        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{1, 3}, {3, 2}, {2, 1}})));
+//        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{5, 1}, {4, 5}, {11, 9}, {9, 4}})));
+//        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{1, 3}, {3, 2}, {2, 1}})));
         System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{1, 2}, {1, 3}, {2, 1}})));
-        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{17, 18}, {18, 10}, {10, 18}})));
-        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{8, 5}, {8, 7}, {0, 8}, {0, 5}, {7, 0}, {5, 0}, {0, 7}, {8, 0}, {7, 8}})));
-        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{5, 13}, {10, 6}, {11, 3}, {15, 19}, {16, 19}, {1, 10}, {19, 11}, {4, 16}, {19, 9}, {5, 11}, {5, 6}, {13, 5}, {13, 9}, {9, 15}, {11, 16}, {6, 9}, {9, 13}, {3, 1}, {16, 5}, {6, 5}})));
+//        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{17, 18}, {18, 10}, {10, 18}})));
+//        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{8, 5}, {8, 7}, {0, 8}, {0, 5}, {7, 0}, {5, 0}, {0, 7}, {8, 0}, {7, 8}})));
+//        System.out.println(Arrays.deepToString(solution.validArrangement(new int[][]{{5, 13}, {10, 6}, {11, 3}, {15, 19}, {16, 19}, {1, 10}, {19, 11}, {4, 16}, {19, 9}, {5, 11}, {5, 6}, {13, 5}, {13, 9}, {9, 15}, {11, 16}, {6, 9}, {9, 13}, {3, 1}, {16, 5}, {6, 5}})));
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    // 存储图
+    Map<Integer, LinkedList<Integer>> edges = new HashMap<>();
+    LinkedList<int[]> result = new LinkedList<>();
+
+    public int[][] validArrangement(int[][] pairs) {
+        // fixme 欧拉图联通 看不懂 但大受震撼 https://oi-wiki.org/graph/euler/
+        // 应该是一笔画联通的问题; 两头一定是一个奇数;
+        /**
+         * 如果图中所有节点的入度和出度都相等，那么从任意节点开始都存在欧拉通路；
+         * 如果图中存在一个节点的出度比入度恰好多 1，另一个节点的入度恰好比出度多 1，
+         * 那么欧拉通路必须从前一个节点开始，到后一个节点结束。
+         * 除此之外的有向图都不存在欧拉通路，
+         * 本体保证了至少存在一个合法排列，因此图已经是上述的两种情况之一。
+         */
+        int len = pairs.length;
+        if (len <= 1) {
+            return pairs;
+        }
+        // 存储入度和出度
+        Map<Integer, Integer> inDegree = new HashMap<>();
+        for (int[] pair : pairs) {
+            edges.putIfAbsent(pair[1], new LinkedList<>());
+            edges.get(pair[1]).add(pair[0]);
+            inDegree.put(pair[0], inDegree.getOrDefault(pair[0], 0) - 1);
+            inDegree.put(pair[1], inDegree.getOrDefault(pair[1], 0) + 1);
+        }
+
+        int end = pairs[0][1];
+
+        for (Map.Entry<Integer, Integer> entry : inDegree.entrySet()) {
+            if (entry.getValue() == 1) {
+                // 找到之后为最后一个节点
+                end = entry.getKey();
+                break;
+            }
+        }
+        dfs(end);
+        return result.toArray(new int[0][0]);
+    }
+
+    private void dfs(int end) {
+        LinkedList<Integer> list2 = edges.get(end);
+        while (list2 != null && !list2.isEmpty()) {
+            Integer pre = list2.pollLast();
+            dfs(pre);
+            result.offer(new int[]{pre, end});
+        }
+    }
+
+}
+//leetcode submit region end(Prohibit modification and deletion)
+
+
+class Solution_TimeOut {
     public int[][] validArrangement(int[][] pairs) {
         // 经过精密的计算; 首尾使用次数一次; 出现最少的首位一定是第一次出现; 出现最少的末位一定是最后一次出现; 之后用递归的方式获取4
         // 以上纯属胡扯; 应该是一笔画联通的问题; 两头一定是一个奇数;
@@ -233,6 +287,5 @@ class Solution {
         pairs[pos2] = temp;
     }
 }
-//leetcode submit region end(Prohibit modification and deletion)
 
 

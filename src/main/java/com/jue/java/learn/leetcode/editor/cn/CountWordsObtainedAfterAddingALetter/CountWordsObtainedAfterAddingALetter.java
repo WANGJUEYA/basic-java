@@ -68,10 +68,8 @@
 
 package com.jue.java.learn.leetcode.editor.cn.CountWordsObtainedAfterAddingALetter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author JUE
@@ -87,6 +85,92 @@ public class CountWordsObtainedAfterAddingALetter {
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    public int wordCount(String[] startWords, String[] targetWords) {
+        // 关键条件: 至多出现一次, 不需要检验重复出现!
+        // 异或结果是2的n次方
+        int result = 0;
+        HashSet<Integer> situation = new HashSet<>(); // 提高检索速度
+        for (String s : startWords) {
+            int origin = getMockInteger(s);
+            for (int i = 0; i < 26; ++i) {
+                // 不包含某个字母
+                if (((origin >> i) & 1) == 0) {
+                    // 一定不会进位!
+                    situation.add(origin | (1 << i));
+                }
+            }
+        }
+        for (String targetWord : targetWords) {
+            if (situation.contains(getMockInteger(targetWord))) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    private int getMockInteger(String str) {
+        int res = 0;
+        for (char ch : str.toCharArray()) {
+            res |= 1 << (ch - 'a');
+        }
+        return res;
+    }
+
+}
+
+//leetcode submit region end(Prohibit modification and deletion)
+class Solution_TimeOut2 {
+    public int wordCount(String[] startWords, String[] targetWords) {
+        // 只能进行一次转换操作; 追加一个字符(不存在); 排序
+        int result = 0;
+        List<char[]> startList = Arrays.stream(startWords).map(item -> {
+            char[] itemChar = item.toCharArray();
+            Arrays.sort(itemChar);
+            return itemChar;
+        }).collect(Collectors.toList());
+        for (String target : targetWords) {
+            char[] itemChar = target.toCharArray();
+            Arrays.sort(itemChar);
+            for (char[] start : startList) {
+                if (canConvert(start, itemChar)) {
+                    result++;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean canConvert(char[] start, char[] target) {
+        int sl = start.length, tl = target.length;
+        // 注意: 必须追加字母
+        if (sl + 1 == tl) {
+            // 中间缺失字母 故使用双指针
+            int l = 0, h = sl;
+            while (l <= h) {
+                if (l == h) {
+                    // 有序的, 查不相等即左右不相等即可
+                    if ((l == 0 || target[l] != target[l - 1]) && (h == sl || target[h] != target[h + 1])) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    if (target[l] == start[l]) {
+                        l++;
+                    } else if (target[h] == start[h - 1]) {
+                        h--;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
+
+class Solution_TimeOut {
     // TODO 超时
     public int wordCount(String[] startWords, String[] targetWords) {
         int lenStart = startWords.length, lenTarget = targetWords.length;
@@ -149,4 +233,3 @@ class Solution {
         return start.size() == 0 && count == 1;
     }
 }
-//leetcode submit region end(Prohibit modification and deletion)
