@@ -103,13 +103,7 @@ class Solution {
             }
         }
         dfs(begin);
-        // 翻转
-        int len = pairs.length;
-        pairs = new int[len][2];
-        for (int index = 0; index < len; index++) {
-            pairs[index] = result.get(index);
-        }
-        return pairs;
+        return result.toArray(new int[0][0]);
     }
 
     private void dfs(int begin) {
