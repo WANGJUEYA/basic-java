@@ -49,7 +49,6 @@ package com.jue.java.learn.leetcode.editor.cn.CountPairsWithXorInARange;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * @author JUE
@@ -67,23 +66,49 @@ public class CountPairsWithXorInARange {
 class Solution {
 
     public int countPairs(int[] nums, int low, int high) {
+        // 字典树方式 2 * 10⁴ < 2^15, 树的高度是15
+        return getNumber(nums, high) - getNumber(nums, low - 1);
+    }
+
+    /**
+     * 计算小于等于x的异或对数
+     */
+    public int getNumber(int[] nums, int x) {
+        return 0;
+    }
+
+    public int add(MyTree tree, int num) {
+        return 0;
+    }
+
+
+}
+
+class MyTree {
+    public int sum;
+    public MyTree[] children; // 0是左节点, 左节点值也为0; 同理得右节点
+
+    public MyTree() {
+        this.children = new MyTree[2];
+    }
+
+    public MyTree addChildren(int num) {
+        // num=0是左树, num=1是右数
+        if (children[num] == null) {
+            children[num] = new MyTree();
+        }
+        sum++;
+        return children[num];
+    }
+}
+
+//leetcode submit region end(Prohibit modification and deletion)
+class Solution_TimeOut {
+    public int countPairs(int[] nums, int low, int high) {
         // 名词解释: 异或: 位运算, 值相同为0, 值不同为1
         // 方案1: 使用模拟法处理数据 - 该方法面临运行超时的问题（PS: 测试结果, 超时!）
-        // return countPairsMock(nums, low, high);
-        // 方案2: 使用字典树的方法
-        return countPairsTree(nums, low, high);
+        return countPairsMock(nums, low, high);
     }
-
-    private int countPairsTree(int[] nums, int low, int high) {
-        int length = nums.length;
-        if (length == 0) {
-            return 0;
-        }
-        int max = IntStream.of(nums).max().getAsInt();
-        return max;
-        // TODO
-    }
-
 
     private List<Integer> toByteList(int num) {
         List<Integer> result = new ArrayList<>();
@@ -127,4 +152,3 @@ class Solution {
         return count;
     }
 }
-//leetcode submit region end(Prohibit modification and deletion)
