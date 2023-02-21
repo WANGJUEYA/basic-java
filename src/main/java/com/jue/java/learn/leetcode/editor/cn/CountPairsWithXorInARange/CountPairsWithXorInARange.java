@@ -57,8 +57,10 @@ import java.util.List;
 public class CountPairsWithXorInARange {
     public static void main(String[] args) {
         Solution solution = new Solution();
+        Solution_TimeOut solution1 = new Solution_TimeOut();
+//        System.out.println(solution.countPairs(new int[]{3848, 7144, 474, 6398, 4916, 6620, 5400, 528, 3950, 2240, 5996, 3504}, 1365, 1481)); // 1
         System.out.println(solution.countPairs(new int[]{1, 4, 2, 7}, 2, 6)); // 6
-        System.out.println(solution.countPairs(new int[]{9, 8, 4, 2, 1}, 5, 14)); // 8
+//        System.out.println(solution.countPairs(new int[]{9, 8, 4, 2, 1}, 5, 14)); // 8
     }
 }
 
@@ -67,21 +69,58 @@ class Solution {
 
     public int countPairs(int[] nums, int low, int high) {
         // 字典树方式 2 * 10⁴ < 2^15, 树的高度是15
-        return getNumber(nums, high) - getNumber(nums, low - 1);
+        return getNumber(nums, high + 1) - getNumber(nums, low);
     }
 
     /**
-     * 计算小于等于x的异或对数
+     * 计算小于x的异或对数
      */
     public int getNumber(int[] nums, int x) {
-        return 0;
+        MyTree tree = new MyTree();
+        int[] max = getBits(x);
+        int result = 0;
+        for (int num : nums) {
+            // 相同往右
+            int[] bits = getBits(num);
+            MyTree current = tree;
+            for (int index = 0; current != null && index <= 15; index++) {
+                if (max[index] == 0) {
+                    // 如果是0必须相等
+                    current = current.children[bits[index]];
+                } else {
+                    // 如果是1则把0的异或值加上 把异或值为0的和加上
+                    if (current.children[bits[index]] != null) {
+                        result += current.children[bits[index]].sum;
+                    }
+                    // 走值不一样的路
+                    current = current.children[bits[index] ^ 1];
+                }
+            }
+            addItem(tree, bits);
+        }
+        return result;
     }
 
-    public int add(MyTree tree, int num) {
-        return 0;
+    private void addItem(MyTree tree, int[] bites) {
+        MyTree current = tree;
+        for (int bit : bites) {
+            if (current.children[bit] == null) {
+                current.children[bit] = new MyTree();
+            }
+            current = current.children[bit];
+            current.sum++;
+        }
     }
 
-
+    private int[] getBits(int num) {
+        int[] bits = new int[16];
+        int index = 15;
+        while (num > 0) {
+            bits[index--] = num % 2;
+            num = num >> 1;
+        }
+        return bits;
+    }
 }
 
 class MyTree {
@@ -89,17 +128,21 @@ class MyTree {
     public MyTree[] children; // 0是左节点, 左节点值也为0; 同理得右节点
 
     public MyTree() {
-        this.children = new MyTree[2];
+        children = new MyTree[2];
     }
 
-    public MyTree addChildren(int num) {
-        // num=0是左树, num=1是右数
-        if (children[num] == null) {
-            children[num] = new MyTree();
-        }
-        sum++;
-        return children[num];
+    @Override
+    public String toString() {
+        return toString(this, 0);
     }
+
+    private String toString(MyTree root, int level) {
+        if (root == null) {
+            return "";
+        }
+        return String.format("%s&%s:(l-%s,r-%S)", level, root.sum, toString(root.children[0], level + 1), toString(root.children[1], level + 1));
+    }
+
 }
 
 //leetcode submit region end(Prohibit modification and deletion)
@@ -144,7 +187,15 @@ class Solution_TimeOut {
         for (int i = 0; i < size - 1; i++) {
             for (int j = i + 1; j < size; j++) {
                 int xor = xor(byteList.get(i), byteList.get(j));
+                System.out.printf("xor(%s,%s)=%s\n", nums[i], nums[j], xor);
+                if (xor <= low - 1) {
+                    System.out.printf("low(%s,%s)=%s\n", nums[i], nums[j], xor);
+                }
+                if (xor <= high) {
+                    System.out.printf("high(%s,%s)=%s\n", nums[i], nums[j], xor);
+                }
                 if (xor >= low && xor <= high) {
+                    System.out.printf("(%s,%s)\n", nums[i], nums[j]);
                     count++;
                 }
             }
