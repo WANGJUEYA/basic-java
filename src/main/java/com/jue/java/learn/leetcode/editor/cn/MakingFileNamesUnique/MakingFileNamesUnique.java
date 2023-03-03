@@ -113,8 +113,8 @@ class Solution {
             int index = 0;
             // find(index) 重置匹配对象, 并在匹配对象中查找下一个匹配的子串
             while (subA.find(index) || subB.find(index)) {
-                String itemA = subA.find(index) ? subA.group(1) : "0";
-                String itemB = subB.find(index) ? subB.group(1) : "0";
+                String itemA = subA.find(index) ? subA.group(1) : "-1";
+                String itemB = subB.find(index) ? subB.group(1) : "-1";
                 if (itemA.equals(itemB) && !"0".equals(itemA)) {
                     index += itemA.length();
                 } else {
@@ -152,10 +152,25 @@ class Solution {
         String[] result = new String[len];
         for (int index = 0; index < len; index++) {
             String originName = names[index];
-            if (existName.contains(originName)) {
+            // 二分法查找
+            int find = -1, low = 0, high = index - 1;
+            while (low <= high) {
+                int mid = (low + high) / 2;
+                int compare = compareTo(existName.get(mid), originName);
+                if (compare == 0) {
+                    find = mid;
+                    break;
+                } else if (compare < 0) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+            if (find >= 0) {
                 int number = 1;
                 int beginIndex = originName.length();
-                for (String item : existName) {
+                for (int i = find; i < index; i++) {
+                    String item = existName.get(i);
                     if (item.startsWith(originName)) {
                         Matcher matcher = pattern.matcher(item.substring(beginIndex));
                         if (matcher.find()) {
@@ -163,6 +178,8 @@ class Solution {
                                 number++;
                             }
                         }
+                    } else {
+                        break;
                     }
                 }
                 originName = originName + "(" + number + ")";
