@@ -55,6 +55,9 @@
 
 package com.jue.java.learn.leetcode.editor.cn.MakeSumDivisibleByP;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author JUE
  * @number 1590
@@ -74,20 +77,23 @@ public class MakeSumDivisibleByP {
 class Solution {
     public int minSubarray(int[] nums, int p) {
         int len = nums.length;
-        int[] prefix = new int[len + 1];
-        for (int index = 0; index < len; index++) {
-            prefix[index + 1] = (prefix[index] + nums[index]) % p;
+        int mod = 0;
+        for (int num : nums) {
+            mod = (mod + num) % p;
         }
-        int mod = prefix[len] % p;
         if (mod == 0) {
             return 0;
         }
-        int min = len;
-        for (int i = 0; i < len; i++) {
-            for (int j = i + 1; j <= len; j++) {
-                if ((prefix[j] - prefix[i] + p) % p == mod) {
-                    min = Math.min(min, j - i);
-                }
+        // 当前前缀和
+        int y = 0, min = len;
+        Map<Integer, Integer> modeForIndex = new HashMap<>();
+        for (int index = 0; index < len; index++) {
+            modeForIndex.put(y, index);
+            y = (y + nums[index]) % p;
+            // 总余mod,  被减去的数组余mod, 前缀和余y;
+            int pre = (y - mod + p) % p;
+            if (modeForIndex.containsKey(pre)) {
+                min = Math.min(min, index - modeForIndex.get(pre) + 1);
             }
         }
         return min >= len ? -1 : min;
