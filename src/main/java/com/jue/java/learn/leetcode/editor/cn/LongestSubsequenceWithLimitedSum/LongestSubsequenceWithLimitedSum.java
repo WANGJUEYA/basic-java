@@ -41,7 +41,7 @@
 
 package com.jue.java.learn.leetcode.editor.cn.LongestSubsequenceWithLimitedSum;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * @author JUE
@@ -50,89 +50,40 @@ import java.util.*;
 public class LongestSubsequenceWithLimitedSum {
     public static void main(String[] args) {
         Solution solution = new Solution();
-//        System.out.println(Arrays.toString(solution.answerQueries(new int[]{4, 5, 2, 1}, new int[]{3, 10, 21})));
-//        System.out.println(Arrays.toString(solution.answerQueries(new int[]{2, 3, 4, 5}, new int[]{1})));
+        System.out.println(Arrays.toString(solution.answerQueries(new int[]{4, 5, 2, 1}, new int[]{3, 10, 21})));
+        System.out.println(Arrays.toString(solution.answerQueries(new int[]{2, 3, 4, 5}, new int[]{1})));
         System.out.println(Arrays.toString(solution.answerQueries(new int[]{736411, 184882, 914641, 37925, 214915}, new int[]{331244, 273144, 118983, 118252, 305688, 718089, 665450})));
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    private void refresh(int k) {
-        if (keyList.isEmpty()) {
-            keyList.add(k);
-            return;
-        }
-        int len = keyList.size();
-        int lastKey = keyList.get(len - 1);
-        if (k >= lastKey) {
-            if (store.get(k) > store.get(lastKey) && k > lastKey) {
-                keyList.add(k);
-            }
-        } else {
-            // 遍历移除较小的
-            while (k < keyList.get(--len)) {
-                if (store.get(k) >= store.get(keyList.get(len))) {
-                    keyList.remove(len);
-                }
-                if (len == 0) {
-                    break;
-                }
-            }
-            if (keyList.isEmpty() || store.get(k) > store.get(keyList.get(len))) {
-                keyList.add(len, k);
-            }
-        }
-    }
-
-    private int find(int k) {
-        if (keyList.contains(k)) {
-            return store.get(k);
-        }
-        int len = keyList.size() - 1;
-        if (keyList.isEmpty() || k < keyList.get(0)) {
-            return 0;
-        }
-        if (k > keyList.get(len)) {
-            return store.get(keyList.get(len));
-        }
-        int l = 0, h = len;
-        while (l < h) {
-            int mid = (l + h) / 2;
-            if (keyList.get(mid) > k) {
-                h = mid;
-            } else {
-                if (l == mid) {
-                    break;
-                }
-                l = mid;
-            }
-        }
-        return store.get(keyList.get(l));
-    }
-
-    Map<Integer, Integer> store = new HashMap<>();
-    // 只留递增结果
-    List<Integer> keyList = new ArrayList<>();
 
     public int[] answerQueries(int[] nums, int[] queries) {
         Arrays.sort(nums);
-        for (int num : nums) {
-            for (int key : new ArrayList<>(store.keySet())) {
-                int k = key + num;
-                int current = store.get(key) + 1;
-                if (current > store.getOrDefault(k, 0)) {
-                    store.put(k, current);
-                    refresh(k);
+        // 前缀和?? 前缀和小于指定值的最大index
+        int len = nums.length;
+        int[] pre = new int[len + 1];
+        for (int index = 0; index < len; index++) {
+            pre[index + 1] = pre[index] + nums[index];
+        }
+        for (int index = 0, c = queries.length; index < c; index++) {
+            // 二分查找小于指定数的最大i
+            int l = 0, h = len;
+            int value = queries[index];
+            while (l < h) {
+                int mid = (l + h + 1) / 2;
+                if (pre[mid] > value) {
+                    h = mid - 1;
+                } else {
+                    if (l == mid || (pre[mid] == value)) {
+                        l = mid;
+                        break;
+                    }
+                    l = mid;
                 }
             }
-            if (!store.containsKey(num)) {
-                store.put(num, 1);
-                refresh(num);
-            }
-        }
-        for (int index = 0, len = queries.length; index < len; index++) {
-            queries[index] = find(queries[index]);
+            queries[index] = l;
         }
         return queries;
     }
