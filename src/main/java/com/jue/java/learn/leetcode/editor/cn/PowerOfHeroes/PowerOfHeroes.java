@@ -47,6 +47,7 @@
 
 package com.jue.java.learn.leetcode.editor.cn.PowerOfHeroes;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,27 +63,32 @@ public class PowerOfHeroes {
         System.out.println(solution.sumOfPower(new int[]{1, 1, 1}));
         System.out.println(solution.sumOfPower(new int[]{1, 2, 3, 4, 5}));
         System.out.println(solution.sumOfPower(new int[]{76, 24, 96, 82, 97})); // 13928461
+        System.out.println(solution.sumOfPower(new int[]{658, 489, 777, 2418, 1893, 130, 2448, 178, 1128, 2149, 1059, 1495, 1166, 608, 2006, 713, 1906, 2108, 680, 1348, 860, 1620, 146, 2447, 1895, 1083, 1465, 2351, 1359, 1187, 906, 533, 1943, 1814, 1808, 2065, 1744, 254, 1988, 1889, 1206})); // 567530242
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
+//import java.math.BigDecimal;
 class Solution {
 
+    public static final Integer MOD = 1000000007;
+
     public int sumOfPower(int[] nums) {
+        // FIXME 的确需要动态规划去完成
         // 的确是一个很完美的排序
         int len = nums.length;
         Arrays.sort(nums);
         // 暴力遍历, 最大值确定了
-        long result = 0;
+        int result = 0;
         for (int i = len - 1; i >= 0; i--) {
-            long max = (long) (((long) nums[i] * nums[i]) % (10E9 + 7));
-            long min = nums[i];
+            int max = multi(nums[i], nums[i]);
+            int min = nums[i];
             for (int c = 1; c <= i; c++) {
-                min = (long) ((min + (double) (nums[i - c] * countA(c - 1))) % (10E9 + 7));
+                min = (min + multi(nums[i - c], countA(c - 1))) % MOD;
             }
-            result = (long) ((max * min + result) % (10E9 + 7));
+            result = (multi(max, min) + result) % MOD;
         }
-        return (int) result;
+        return result;
     }
 
 
@@ -99,9 +105,17 @@ class Solution {
         if (A.containsKey(n)) {
             return A.get(n);
         }
-        int result = (int) ((countA(n - 1) * 2) % (10E9 + 7));
+        int result = multi(countA(n - 1), 2);
         A.put(n, result);
         return result;
+    }
+
+    private int multi(int a, int b) {
+        return BigDecimal.valueOf(a)
+                .multiply(BigDecimal.valueOf(b))
+                .divideAndRemainder(BigDecimal.valueOf(MOD))
+                // 第一个数为商, 第二个数为余数
+                [1].intValue();
     }
 
 }
