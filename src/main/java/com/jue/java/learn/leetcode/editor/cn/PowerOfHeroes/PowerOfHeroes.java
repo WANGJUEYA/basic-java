@@ -47,9 +47,9 @@
 
 package com.jue.java.learn.leetcode.editor.cn.PowerOfHeroes;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author JUE
@@ -59,90 +59,49 @@ public class PowerOfHeroes {
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.sumOfPower(new int[]{2, 1, 4}));
+        System.out.println(solution.sumOfPower(new int[]{1, 1, 1}));
+        System.out.println(solution.sumOfPower(new int[]{1, 2, 3, 4, 5}));
+        System.out.println(solution.sumOfPower(new int[]{76, 24, 96, 82, 97})); // 13928461
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 
-    // 0 存储大值 1存储小值
-    long[][][] store;
-
     public int sumOfPower(int[] nums) {
         // 的确是一个很完美的排序
-        List<int[]> sort = new ArrayList<>();
         int len = nums.length;
-        for (int idx = 0; idx < len; idx++) {
-            sort.add(new int[]{nums[idx], idx});
-        }
-        sort.sort(Comparator.comparingInt(item -> item[0]));
-        store = new long[len][len][2];
-        // 明显有树的样子了！
-        treeMax(sort, 0, len - 1);
-        treeMin(sort, 0, len - 1);
+        Arrays.sort(nums);
+        // 暴力遍历, 最大值确定了
         long result = 0;
-        for (int i = 0; i < len; i++) {
-            for (int j = i; j < len; j++) {
-                result = (long) ((store[i][j][0] * store[i][j][1] + result) % (10e9 + 7));
+        for (int i = len - 1; i >= 0; i--) {
+            long max = (long) (((long) nums[i] * nums[i]) % (10E9 + 7));
+            long min = nums[i];
+            for (int c = 1; c <= i; c++) {
+                min = (long) ((min + (double) (nums[i - c] * countA(c - 1))) % (10E9 + 7));
             }
+            result = (long) ((max * min + result) % (10E9 + 7));
         }
         return (int) result;
     }
 
-    private void treeMax(List<int[]> sort, int begin, int end) {
-        if (sort.isEmpty()) {
-            return;
-        }
-        int len = sort.size();
-        int[] single = sort.get(len - 1);
-        long current = (long) (((long) single[0] * single[0]) % (10e9 + 7));
-        for (int i = begin; i <= single[1]; i++) {
-            for (int j = single[1]; j <= end; j++) {
-                store[i][j][0] = current;
-            }
-        }
-        if (begin == end) {
-            assert sort.size() == 1;
-            return;
-        }
-        List<int[]> left = new ArrayList<>();
-        List<int[]> right = new ArrayList<>();
-        for (int idx = 0; idx < len - 1; idx++) {
-            if (sort.get(idx)[1] < single[1]) {
-                left.add(sort.get(idx));
-            } else {
-                right.add(sort.get(idx));
-            }
-        }
-        treeMax(left, begin, single[1] - 1);
-        treeMax(right, single[1] + 1, end);
-    }
 
-    private void treeMin(List<int[]> sort, int begin, int end) {
-        if (sort.isEmpty()) {
-            return;
+    /**
+     * 阶乘结果
+     */
+    public static final Map<Integer, Integer> A = new HashMap<>();
+
+    // bug 以为计算阶乘 实际上不是 c(1) = 2 & 1! = 1; c(2) = 4 & 2! = 2; c(3) = 8 & 3! = 6; c(4) = 16 & 4! = 24
+    private int countA(int n) {
+        if (n == 0) {
+            return 1;
         }
-        int[] single = sort.get(0);
-        for (int i = begin; i <= single[1]; i++) {
-            for (int j = single[1]; j <= end; j++) {
-                store[i][j][1] = single[0];
-            }
+        if (A.containsKey(n)) {
+            return A.get(n);
         }
-        if (begin == end) {
-            assert sort.size() == 1;
-            return;
-        }
-        List<int[]> left = new ArrayList<>();
-        List<int[]> right = new ArrayList<>();
-        for (int idx = 1, len = sort.size(); idx < len; idx++) {
-            if (sort.get(idx)[1] < single[1]) {
-                left.add(sort.get(idx));
-            } else {
-                right.add(sort.get(idx));
-            }
-        }
-        treeMin(left, begin, single[1] - 1);
-        treeMin(right, single[1] + 1, end);
+        int result = (int) ((countA(n - 1) * 2) % (10E9 + 7));
+        A.put(n, result);
+        return result;
     }
 
 }
