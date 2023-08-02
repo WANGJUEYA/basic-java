@@ -33,7 +33,9 @@
 
 package com.jue.java.learn.leetcode.editor.cn.CardFlippingGame;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * @author JUE
@@ -43,44 +45,35 @@ public class CardFlippingGame {
     public static void main(String[] args) {
         Solution solution = new Solution();
         System.out.println(solution.flipgame(new int[]{1}, new int[]{1}));
+        System.out.println(solution.flipgame(new int[]{1, 1}, new int[]{2, 1}));
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 
-    Map<Integer, List<Integer>> numIdx;
-
     public int flipgame(int[] fronts, int[] backs) {
         int len = fronts.length;
-        numIdx = new HashMap<>(len);
+        PriorityQueue<Integer> allNum = new PriorityQueue<>();
+        Set<Integer> deleteNum = new HashSet<>();
         for (int idx = 0; idx < len; idx++) {
-            numIdx.putIfAbsent(fronts[idx], new ArrayList<>());
-            numIdx.get(fronts[idx]).add(idx);
-            numIdx.putIfAbsent(backs[idx], new ArrayList<>());
-            numIdx.get(backs[idx]).add(idx);
-        }
-        Integer[] nums = numIdx.keySet().toArray((new Integer[0]));
-        Arrays.sort(nums);
-        // 不能用二分查找法, 在于排序好的数字并不能线性逼近
-        for (int num : nums) {
-            if (check(num)) {
-                return num;
+            if (fronts[idx] == backs[idx]) {
+                deleteNum.add(fronts[idx]);
+                allNum.remove(fronts[idx]);
+            }
+            if (!deleteNum.contains(fronts[idx]) && !allNum.contains(fronts[idx])) {
+                allNum.add(fronts[idx]);
+            }
+            if (!deleteNum.contains(backs[idx]) && !allNum.contains(backs[idx])) {
+                allNum.add(backs[idx]);
             }
         }
-        return 0;
+        if (allNum.size() > 0) {
+            return allNum.iterator().next();
+        } else {
+            return 0;
+        }
     }
 
-    private boolean check(int number) {
-        // 如果这个数字在一张牌正反面都出现了(且出现的索引不是自己本身; 包含自己本身), 则不能校验通过
-        List<Integer> idxes = numIdx.get(number);
-        // 出现了两次一样的数据遍认为不通过
-        for (int i = 1, len = idxes.size(); i < len; i++) {
-            if (idxes.get(i).equals(idxes.get(i - 1))) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
