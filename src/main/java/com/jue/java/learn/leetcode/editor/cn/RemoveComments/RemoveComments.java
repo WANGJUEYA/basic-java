@@ -101,7 +101,7 @@ import java.util.List;
 public class RemoveComments {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        System.out.println(solution.removeComments(new String[]{"a/*/b//*c","blank","d/*/e*//f"})); // ae*
+        System.out.println(solution.removeComments(new String[]{"a/*/b//*c", "blank", "d/*/e*//f"})); // ae*
     }
 }
 
@@ -136,6 +136,9 @@ class Solution {
                     } else {
                         current.append(str.charAt(i));
                     }
+                }
+                if (i == len - 1 && inComment) {
+                    beginIdx = -10;
                 }
                 if (i == len - 1 && !inComment && current.length() > 0) {
                     result.add(current.toString());
