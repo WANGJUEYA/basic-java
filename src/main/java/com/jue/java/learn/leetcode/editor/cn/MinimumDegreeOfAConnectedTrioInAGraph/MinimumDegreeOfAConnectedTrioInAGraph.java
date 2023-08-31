@@ -46,11 +46,6 @@
 
 package com.jue.java.learn.leetcode.editor.cn.MinimumDegreeOfAConnectedTrioInAGraph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author JUE
  * @number 1761
@@ -66,29 +61,23 @@ public class MinimumDegreeOfAConnectedTrioInAGraph {
 class Solution {
     public int minTrioDegree(int n, int[][] edges) {
         // 存储所有的边；没有自己到自己的边
-        Map<Integer, List<Integer>> pointOfEdges = new HashMap<>(edges.length);
+        boolean[][] edgesMap = new boolean[n + 1][n + 1];
+        int[] degree = new int[n + 1];
         for (int[] edge : edges) {
-            pointOfEdges.putIfAbsent(edge[0], new ArrayList<>());
-            pointOfEdges.putIfAbsent(edge[1], new ArrayList<>());
-            pointOfEdges.get(edge[0]).add(edge[1]);
-            pointOfEdges.get(edge[1]).add(edge[0]);
+            edgesMap[edge[0]][edge[1]] = true;
+            edgesMap[edge[1]][edge[0]] = true;
+            degree[edge[0]]++;
+            degree[edge[1]]++;
         }
         // 遍历所有点判断有没有三元组
-        Integer[] points = pointOfEdges.keySet().toArray(new Integer[0]);
-        int len = points.length;
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i < len - 2; i++) {
-            for (int j = i + 1; j < len - 1; j++) {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
                 // 尝试剪枝解决超时的问题
-                if (pointOfEdges.get(points[i]).contains(points[j])) {
-                    for (int k = j + 1; k < len; k++) {
-                        if (pointOfEdges.get(points[i]).contains(points[k])
-                                && pointOfEdges.get(points[j]).contains(points[k])) {
-                            int current = pointOfEdges.get(points[i]).size()
-                                    + pointOfEdges.get(points[j]).size()
-                                    + pointOfEdges.get(points[k]).size()
-                                    // 没有重复边，减去两个顶点都在联通图的数据
-                                    - 6;
+                if (edgesMap[i][j]) {
+                    for (int k = j + 1; k <= n; k++) {
+                        if (edgesMap[i][k] && edgesMap[j][k]) {
+                            int current = degree[i] + degree[j] + degree[k] - 6;
                             if (current == 0) {
                                 return 0;
                             }
