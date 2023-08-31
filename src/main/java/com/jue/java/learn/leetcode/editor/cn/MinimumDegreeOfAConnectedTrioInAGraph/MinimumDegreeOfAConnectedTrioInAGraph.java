@@ -79,19 +79,21 @@ class Solution {
         int min = Integer.MAX_VALUE;
         for (int i = 0; i < len - 2; i++) {
             for (int j = i + 1; j < len - 1; j++) {
-                for (int k = j + 1; k < len; k++) {
-                    if (pointOfEdges.get(points[i]).contains(points[j])
-                            && pointOfEdges.get(points[i]).contains(points[k])
-                            && pointOfEdges.get(points[j]).contains(points[k])) {
-                        int current = pointOfEdges.get(points[i]).size()
-                                + pointOfEdges.get(points[j]).size()
-                                + pointOfEdges.get(points[k]).size()
-                                // 没有重复边，减去两个顶点都在联通图的数据
-                                - 6;
-                        if (current == 0) {
-                            return 0;
+                // 尝试剪枝解决超时的问题
+                if (pointOfEdges.get(points[i]).contains(points[j])) {
+                    for (int k = j + 1; k < len; k++) {
+                        if (pointOfEdges.get(points[i]).contains(points[k])
+                                && pointOfEdges.get(points[j]).contains(points[k])) {
+                            int current = pointOfEdges.get(points[i]).size()
+                                    + pointOfEdges.get(points[j]).size()
+                                    + pointOfEdges.get(points[k]).size()
+                                    // 没有重复边，减去两个顶点都在联通图的数据
+                                    - 6;
+                            if (current == 0) {
+                                return 0;
+                            }
+                            min = Math.min(min, current);
                         }
-                        min = Math.min(min, current);
                     }
                 }
             }
