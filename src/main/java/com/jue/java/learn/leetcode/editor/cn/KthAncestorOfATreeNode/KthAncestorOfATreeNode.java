@@ -68,7 +68,6 @@ public class KthAncestorOfATreeNode {
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-// TODO should learn
 class TreeAncestor {
     int[][] dp;
 
