@@ -32,38 +32,39 @@ import java.util.List;
  */
 public class CombinationSumIii {
     public static void main(String[] args) {
+        // 用二进制子集枚举
+        // 如果用组合枚举，相关path可以每次单独清空，不需要新建数组
         Solution solution = new Solution();
-        System.out.println(solution.combinationSum3(3, 7));
+        System.out.println(solution.combinationSum3(3, 7)); // [[1,2,4]]
+        System.out.println(solution.combinationSum3(3, 9)); // [[1,2,6], [1,3,5], [2,3,4]]
     }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
-        return combinationSum3(0, 1, k, n);
-    }
-
-    public List<List<Integer>> combinationSum3(int last, int len, int k, int n) {
-//        System.out.println("(last,len,k,n) => " + last + "," + len + "," + k + "," + n);
+        if (k == 0) {
+            return new ArrayList<>();
+        }
         List<List<Integer>> result = new ArrayList<>();
-        if (len > k) {
-            return result;
-        }
-        List<Integer> temp = new ArrayList<>();
-        if (len == k && last < n && n >= 1 && n <= 9) {
-            temp.add(n);
-            result.add(temp);
-            return result;
-        }
-        for (int index = last + 1; index < 10 && index <= n; index++) {
-            List<List<Integer>> sub = combinationSum3(index, len + 1, k, n - index);
-//            System.out.println(sub);
-            for (List<Integer> s : sub) {
-                s.add(index);
-                result.add(s);
-            }
-        }
+        combinationSum3(result, new ArrayList<>(), k, n);
         return result;
     }
+
+    protected void combinationSum3(List<List<Integer>> result, List<Integer> before, int k, int n) {
+        if (k == 1) {
+            if (n > before.get(0) && n <= 9) {
+                before.add(0, n);
+                result.add(before);
+            }
+            return;
+        }
+        for (int i = (before.isEmpty() ? 0 : before.get(0)) + 1; i < n; i++) {
+            List<Integer> newPath = new ArrayList<>(before);
+            newPath.add(0, i);
+            combinationSum3(result, newPath, k - 1, n - i);
+        }
+    }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
