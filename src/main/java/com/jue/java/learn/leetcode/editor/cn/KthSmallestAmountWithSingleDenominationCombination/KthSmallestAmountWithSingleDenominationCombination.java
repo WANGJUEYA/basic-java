@@ -44,7 +44,9 @@
 
 package com.jue.java.learn.leetcode.editor.cn.KthSmallestAmountWithSingleDenominationCombination;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * @author JUE
@@ -64,10 +66,77 @@ public class KthSmallestAmountWithSingleDenominationCombination {
 
 class Solution {
     public long findKthSmallest(int[] coins, int k) {
-        // 二分查找 + 容斥定理 + 预处理
-        return 0;
+        if (coins.length == 1) {
+            return (long) coins[0] * k;
+        }
+        // 二分查找 + 容斥定理 + 预处理;
+        long[] lcm = new long[1 << coins.length];
+        lcm[0] = 1;
+        for (int i = 0; i < coins.length; i++) {
+            // 表示有多少种集合算法，位数为1表示该组集合参与运算
+            int bit = 1 << i;
+            for (int mask = 0; mask < bit; mask++) {
+                //刷表法 DP，在集合 mask 的基础上添加元素 i
+                lcm[bit | mask] = lcm(lcm[mask], coins[i]);
+            }
+        }
+        for (int i = 1; i < lcm.length; i++) {
+            if (Integer.bitCount(i) % 2 == 0) {
+                lcm[i] *= -1;
+            }
+        }
+
+        long left = k - 1;
+        long right = (long) coins[0] * k;
+        while (left + 1 < right) {
+            long mid = (left + right) / 2;
+            if (check(mid, lcm, k)) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        }
+        return right;
     }
+
+    // 检查数量是否足够
+    private boolean check(long m, long[] subsetLcm, int k) {
+        long cnt = 0;
+        for (int i = 1; i < subsetLcm.length; i++) { // 枚举所有非空子集
+            cnt += m / subsetLcm[i];
+        }
+        return cnt >= k;
+    }
+
+    protected long count(int a, int b, int m) {
+        return m / a + m / b - m / lcm(a, b);
+    }
+
+    /**
+     * 计算两个数的最小公倍数
+     */
+    protected long lcm(long a, long b) {
+        // lcm(a,b) = (a*b)/gcd(a,b);
+        // 辗转相除法求gcd
+        return (a * b) / gcd(a, b);
+    }
+
+    /**
+     * 最大公约数: 辗转相除法
+     */
+    protected long gcd(long a, long b) {
+        if (a < b) {
+            return gcd(b, a);
+        }
+        long mod = a % b;
+        if (mod == 0) {
+            return b;
+        }
+        return gcd(b, mod);
+    }
+
 }
+//leetcode submit region end(Prohibit modification and deletion)
 
 class Solution_Timeout {
     public long findKthSmallest(int[] coins, int k) {
@@ -93,4 +162,3 @@ class Solution_Timeout {
         return result;
     }
 }
-//leetcode submit region end(Prohibit modification and deletion)
