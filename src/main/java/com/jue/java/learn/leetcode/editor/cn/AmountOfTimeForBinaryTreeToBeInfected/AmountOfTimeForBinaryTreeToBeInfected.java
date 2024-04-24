@@ -48,9 +48,6 @@ package com.jue.java.learn.leetcode.editor.cn.AmountOfTimeForBinaryTreeToBeInfec
 
 import com.jue.java.learn.tooffer.bean.TreeNode;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
-
 /**
  * @author JUE
  * @number 2385
@@ -78,55 +75,77 @@ public class AmountOfTimeForBinaryTreeToBeInfected {
  * }
  * }
  */
+
 class Solution {
 
-    public int amountOfTime(TreeNode root, int start) {
-        // 先用广度遍历找到节点，再用深度遍历计算最大层数
-        Queue<TreeNode> bfs = new ArrayDeque<>();
-        bfs.add(root);
-        int level = 0;
-        while (!bfs.isEmpty()) {
-            Queue<TreeNode> next = new ArrayDeque<>();
-            while (!bfs.isEmpty()) {
-                TreeNode cur = bfs.poll();
-                if (cur.val == start) {
-                    int result = level;
-                    // 找到了
-                    while (!bfs.isEmpty()) {
-                        result = Math.max(result, dfs(bfs.poll(), level * 2));
-                    }
-                    while (!next.isEmpty()) {
-                        result = Math.max(result, dfs(next.poll(), level * 2 + 1));
-                    }
-                    result = Math.max(result, dfs(cur, 0));
-                    return result;
-                } else {
-                    if (cur.left != null) {
-                        next.add(cur.left);
-                    }
-                    if (cur.right != null) {
-                        next.add(cur.right);
-                    }
-                }
-            }
-            level++;
-            bfs = next;
+    TreeNode left;
+    TreeNode target;
+
+    private String print(TreeNode root) {
+        if (root == null) {
+            return "null";
         }
-        return -1;
+        return root.val + "," + print(root.left) + "," + print(root.right);
     }
 
-    private int dfs(TreeNode root, int before) {
-        if (root == null) {
-            return before;
-        }
-        int result = before;
-        if (root.left != null) {
-            result = Math.max(result, dfs(root.left, before + 1));
-        }
-        if (root.right != null) {
-            result = Math.max(result, dfs(root.right, before + 1));
+    public int amountOfTime(TreeNode root, int start) {
+        // 先用广度遍历找到节点，再用深度遍历计算最大层数； 不太行，其实层数是公共父节点的层数，不能无脑*2
+        // 调整方法：先dfS找到，再重新构造树
+
+        //System.out.println(print(root));
+
+        dfs(root, start);
+
+        //System.out.println(print(target));
+        //System.out.println(print(left));
+
+        int result = level(target, 0);
+        if (left != null) {
+            result = Math.max(result, level(left, 1));
         }
         return result;
+    }
+
+    private int level(TreeNode root, int count) {
+        if (root == null) {
+            return count - 1;
+        }
+        int result = count;
+        if (root.left != null) {
+            result = Math.max(result, level(root.left, count + 1));
+        }
+        if (root.right != null) {
+            result = Math.max(result, level(root.right, count + 1));
+        }
+        return result;
+    }
+
+    private TreeNode dfs(TreeNode root, int start) {
+        if (root.val == start) {
+            target = root;
+            left = root.left;
+            root.left = null;
+            return root;
+        } else {
+            if (root.left != null) {
+                TreeNode newParent = dfs(root.left, start);
+                if (newParent != null) {
+                    newParent.left = root;
+                    root.left = null;
+                    return root;
+                }
+            }
+            if (root.right != null) {
+                TreeNode newParent = dfs(root.right, start);
+                if (newParent != null) {
+                    newParent.left = root;
+                    root.right = root.left;
+                    root.left = null;
+                    return root;
+                }
+            }
+        }
+        return null;
     }
 
 }
