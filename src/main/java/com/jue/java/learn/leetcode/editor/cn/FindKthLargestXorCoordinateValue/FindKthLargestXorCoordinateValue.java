@@ -48,9 +48,9 @@
 
 package com.jue.java.learn.leetcode.editor.cn.FindKthLargestXorCoordinateValue;
 
+import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.List;
 
 /**
  * @author JUE
@@ -65,7 +65,7 @@ public class FindKthLargestXorCoordinateValue {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int kthLargestValue(int[][] matrix, int k) {
-        Queue<Integer> queue = new PriorityQueue<>(Comparator.comparingInt(a -> -a));
+        List<Integer> queue = new ArrayList<>();
         int row = matrix.length;
         int col = matrix[0].length;
         for (int i = 0; i < row; i++) {
@@ -84,11 +84,8 @@ class Solution {
                 queue.add(count);
             }
         }
-        int res = -1;
-        while (!queue.isEmpty() && --k >= 0) {
-            res = queue.poll();
-        }
-        return res;
+        queue.sort(Comparator.comparingInt(a -> -a));
+        return queue.get(k - 1);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
