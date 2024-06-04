@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class GetAlbumList {
 
-    public static final boolean STORE = true;
+    public static final boolean STORE = false;
 
     public static final String COOKIE = "_iuqxldmzr_=32; _ntes_nuid=2f6603aee261b3095316e2583bc19040; WM_TID=JG%2FouDrt6ZhAVUFUBQYrFe8WHuz%2BZut4; nts_mail_user=wangjueya@163.com:-1:1; WEVNSM=1.0.0; WNMCID=zpfdvo.1641644090946.01.0; NMTID=00OPx2TFS92TyGvp0NBuhSKlPF2gpgAAAF-OZzqjg; ntes_kaola_ad=1; _ntes_nnid=2f6603aee261b3095316e2583bc19040,1711458058528; ntes_utid=tid._.16Rn19rW9AxFBhEBBBOBrvDt83CXHs18._.0; sDeviceId=YD-y%2BwEnjz3CT5EV0QBBQeF79uYSVJ16nco; JSESSIONID-WYYY=aHK%2FUOrvXdoa%2F%2BBvxSAchoHjN8NcRY%2BRYVAyy6fEsHrw%2B%5CucK%5CSMoEjEa7agiMlFEQ8z%2FiMzXH3a1f3YqfzJpovo%2BuTxhFlcw9Q2uz0eCzfP6UXlO%2F7RmA4ND3OK1gNWtj6MPTtUOiSJSejH2uSckdDGDcWZA4G13ksqhxsxCv5y3hUb%3A1717300557255; WM_NI=7t4TbkUbxPUTAE8%2FyzSqwXPbu7Oh2YsIQCgaLRG3B6lqyGevcm9sJyGWTfhNiw%2BGjOMpfG5k%2FpiI%2Bg%2FPi602DXSOPE%2Fi9d17vem6jSjGNopiC98pdxvU7%2BqFGjtCMsbWNFM%3D; WM_NIKE=9ca17ae2e6ffcda170e2e6eed9d77e8f92b8a4db698f9a8fb2d14f829f9eadc57af6bdbc93b779edeaf991ef2af0fea7c3b92af5acfcb5e16197beb8b1d860839bf8d0fc7291afb9b9d36ab7e98189b153b1979fa4e66b908e89d4c13eb0afb7a8e87ea1b3f794c97385899c87eb46aba9e5a8e9458fb0aaa8b861edb0a7aaaa6ded90a7d7b33a88889db0d34fedb7f785b43db6bba3d7e959aa998290f36381e7f891e774b68bf9ccf44e85b6bca4d079a28982a7d037e2a3; __snaker__id=9aNDF9Pl9yIxZXHo; gdxidpyhxdE=q34LcKKD%2BafVZBomj4%2BDNmgB4pK3PvzkKMiEEdZPOEe2GbYAcagpIA9%5C%5ClhSt9g3M85v%2FLaTjGJv2JYzd1KeUfruZZ6uJz9bd%5CZo7ZBMmSpvY0z16b0LlLoI%5CieCSfQZdwqV6O6BRjGbw0rNCB%5C9NxNVXTYWMyYauRtMYTe3ZO4Y52EZ%3A1717299669696; NTES_YD_SESS=HbmXtT9sxrgqp6qkJnjeXmeAOcl5s1EIH3IdDtwiDBo7FjMNF3qU1PxhO6u7v48FKoEYTDGzib_GIsdeB17xvCi2OBcDF0hWnckfIgWZdyb6dRJedUeX9UJ_Q6l5aTLpwR_tRb.1k7067VuzeQN6iBbA5TaWE7XlIn.JE6SXXM5OQgvPw8LSu_XXDEQzgWiwzjK3C2dx5i7yO04u0vBuMhns.np_Dix5EVQ6PptuH0vz6; S_INFO=1717298798|0|0&60##|16619778424; P_INFO=16619778424|1717298798|1|music|00&99|null&null&null#bej&null#10#0|&0||16619778424; __csrf=6aafafd96dda2de3000d60046ac13602; __remember_me=true; MUSIC_U=0057D2C99E730D028BCE961266EB371B2E641358F4EAD469C40E5361C443AC6C24DE7F89D804013E4C1047900B10E023EA8AAD603C954EE32885FA24D879D80C126CB3F0231360EECE8294E9B49E096AB544F7D7BB3E3DBE704DE822E350414919B0CC870CCCF3B3CA0B355C773A577D2166995AF247B5C65219EB9585D99716A9D29A35AA103EDAF07E7895EEDADB700743072B3A0BDDF60CC716B0836448F24687216804226BE6B5E8B93BC34EEEF9CD8DB7C03BD1D24A8A72E95FB9B45EE5189D0719ACCC8F114684B7FE68278DC38A69A179E05E5BD37AE2A9E6252F270CEDA3AC4B0623E712B32D80623BBD157BE2F9D9DBAA6989CC77BDCD9E2A6929EE7F43FC8B30D30512105B7992C64928DB719CA4AAB350D678A45ECDE20FEAF9E787D4BC3C6C19DC5A6DDD516559980D4D0C49CB082A615D36FF13729656FDF8C1D94107FB366856B55BB32527DAD87E2FA2AE349F0BDADA8F8A77D39DBC8B0DD17B";
 
@@ -50,6 +50,34 @@ public class GetAlbumList {
                 , {"8259", "1981-金莎"}
                 , {"3066", "1983-胡彦斌"}
                 , {"10572", "1983-张芸京"}
+                , {"29802127", "2001-单依纯"}
+                , {"6462", "1981-张敬轩"}
+                , {"188565", "1991-银临"}
+                , {"6290", "1980-音频怪物"}
+                , {"188558", "1986-Aki阿杰"}
+                , {"8926", "1970-莫文蔚"}
+                , {"961358", "1992-不才"}
+                , {"9061", "1967-那英"}
+                , {"64143", "1978-Lenka"}
+                , {"12186038", "1998-叶炫清"}
+                , {"10371", "1981-姚贝娜"}
+                , {"13193", "1999-五月天"}
+                , {"1047237", "1993-五音Jw"}
+                , {"12083175", "1994-排骨教主"}
+                , {"4592", "1989-马頔"}
+                , {"3685", "1987-林宥嘉"}
+                , {"8325", "1987-梁静茹"}
+                , {"8327", "1984-李宇春"}
+                , {"3121", "1983-黄阅"}
+                , {"16456", "1989-花澤香菜"}
+                , {"189955", "1990-蔡翊昇"}
+                , {"791534", "1979-戴荃"}
+                , {"791100", "1987-陈姿彤"}
+                , {"10763", "1984-曾沛慈"}
+                , {"12985", "2000-Twins"}
+                , {"797087", "1988-Smile_小千"}
+                , {"11952", "2004-JS"}
+                , {"11679", "2004-GALA"}
         };
         List<String[]> infos = new ArrayList<>();
         for (String[] i : item) {
@@ -105,7 +133,7 @@ public class GetAlbumList {
         for (Element child : parent.get(0).children()) {
             String date = child.getElementsByClass("s-fc3").text();
             Elements album = child.getElementsByClass("tit s-fc0");
-            String name = album.text();
+            String name = album.text().replaceAll("/", "&");
             while (name.endsWith(".")) {
                 name = name.substring(0, name.length() - 1);
             }
