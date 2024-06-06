@@ -1,4 +1,4 @@
-package com.jue.java.music;
+package com.jue.java.backup;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -111,7 +111,7 @@ public class GetAlbumList {
             System.out.println(storeFolderPath + "  >>>>  已创建");
         }
 
-        // 解析HTML字符串
+        // 处理专辑数据
         File file = new File(folder + "/index.html");
         Document doc;
         if (file.exists()) {
@@ -127,7 +127,7 @@ public class GetAlbumList {
             return res;
         }
 
-        // 获取所有段落
+        // 处理歌曲数据
         Elements parent = doc.getElementsByAttributeValueStarting("data-id", userId);
 
         for (Element child : parent.get(0).children()) {
