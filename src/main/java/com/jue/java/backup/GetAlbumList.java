@@ -1,5 +1,6 @@
 package com.jue.java.backup;
 
+import com.jue.java.backup.entity.DataMusic;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,12 +9,13 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GetAlbumList {
 
@@ -21,7 +23,7 @@ public class GetAlbumList {
 
     public static final String COOKIE = "_iuqxldmzr_=32; _ntes_nuid=2f6603aee261b3095316e2583bc19040; WM_TID=JG%2FouDrt6ZhAVUFUBQYrFe8WHuz%2BZut4; nts_mail_user=wangjueya@163.com:-1:1; WEVNSM=1.0.0; WNMCID=zpfdvo.1641644090946.01.0; NMTID=00OPx2TFS92TyGvp0NBuhSKlPF2gpgAAAF-OZzqjg; ntes_kaola_ad=1; _ntes_nnid=2f6603aee261b3095316e2583bc19040,1711458058528; ntes_utid=tid._.16Rn19rW9AxFBhEBBBOBrvDt83CXHs18._.0; sDeviceId=YD-y%2BwEnjz3CT5EV0QBBQeF79uYSVJ16nco; JSESSIONID-WYYY=aHK%2FUOrvXdoa%2F%2BBvxSAchoHjN8NcRY%2BRYVAyy6fEsHrw%2B%5CucK%5CSMoEjEa7agiMlFEQ8z%2FiMzXH3a1f3YqfzJpovo%2BuTxhFlcw9Q2uz0eCzfP6UXlO%2F7RmA4ND3OK1gNWtj6MPTtUOiSJSejH2uSckdDGDcWZA4G13ksqhxsxCv5y3hUb%3A1717300557255; WM_NI=7t4TbkUbxPUTAE8%2FyzSqwXPbu7Oh2YsIQCgaLRG3B6lqyGevcm9sJyGWTfhNiw%2BGjOMpfG5k%2FpiI%2Bg%2FPi602DXSOPE%2Fi9d17vem6jSjGNopiC98pdxvU7%2BqFGjtCMsbWNFM%3D; WM_NIKE=9ca17ae2e6ffcda170e2e6eed9d77e8f92b8a4db698f9a8fb2d14f829f9eadc57af6bdbc93b779edeaf991ef2af0fea7c3b92af5acfcb5e16197beb8b1d860839bf8d0fc7291afb9b9d36ab7e98189b153b1979fa4e66b908e89d4c13eb0afb7a8e87ea1b3f794c97385899c87eb46aba9e5a8e9458fb0aaa8b861edb0a7aaaa6ded90a7d7b33a88889db0d34fedb7f785b43db6bba3d7e959aa998290f36381e7f891e774b68bf9ccf44e85b6bca4d079a28982a7d037e2a3; __snaker__id=9aNDF9Pl9yIxZXHo; gdxidpyhxdE=q34LcKKD%2BafVZBomj4%2BDNmgB4pK3PvzkKMiEEdZPOEe2GbYAcagpIA9%5C%5ClhSt9g3M85v%2FLaTjGJv2JYzd1KeUfruZZ6uJz9bd%5CZo7ZBMmSpvY0z16b0LlLoI%5CieCSfQZdwqV6O6BRjGbw0rNCB%5C9NxNVXTYWMyYauRtMYTe3ZO4Y52EZ%3A1717299669696; NTES_YD_SESS=HbmXtT9sxrgqp6qkJnjeXmeAOcl5s1EIH3IdDtwiDBo7FjMNF3qU1PxhO6u7v48FKoEYTDGzib_GIsdeB17xvCi2OBcDF0hWnckfIgWZdyb6dRJedUeX9UJ_Q6l5aTLpwR_tRb.1k7067VuzeQN6iBbA5TaWE7XlIn.JE6SXXM5OQgvPw8LSu_XXDEQzgWiwzjK3C2dx5i7yO04u0vBuMhns.np_Dix5EVQ6PptuH0vz6; S_INFO=1717298798|0|0&60##|16619778424; P_INFO=16619778424|1717298798|1|music|00&99|null&null&null#bej&null#10#0|&0||16619778424; __csrf=6aafafd96dda2de3000d60046ac13602; __remember_me=true; MUSIC_U=0057D2C99E730D028BCE961266EB371B2E641358F4EAD469C40E5361C443AC6C24DE7F89D804013E4C1047900B10E023EA8AAD603C954EE32885FA24D879D80C126CB3F0231360EECE8294E9B49E096AB544F7D7BB3E3DBE704DE822E350414919B0CC870CCCF3B3CA0B355C773A577D2166995AF247B5C65219EB9585D99716A9D29A35AA103EDAF07E7895EEDADB700743072B3A0BDDF60CC716B0836448F24687216804226BE6B5E8B93BC34EEEF9CD8DB7C03BD1D24A8A72E95FB9B45EE5189D0719ACCC8F114684B7FE68278DC38A69A179E05E5BD37AE2A9E6252F270CEDA3AC4B0623E712B32D80623BBD157BE2F9D9DBAA6989CC77BDCD9E2A6929EE7F43FC8B30D30512105B7992C64928DB719CA4AAB350D678A45ECDE20FEAF9E787D4BC3C6C19DC5A6DDD516559980D4D0C49CB082A615D36FF13729656FDF8C1D94107FB366856B55BB32527DAD87E2FA2AE349F0BDADA8F8A77D39DBC8B0DD17B";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         String[][] item = new String[][]{
                 {null, null}
                 , {"2116", "1974-陈奕迅"}
@@ -79,7 +81,7 @@ public class GetAlbumList {
                 , {"11952", "2004-JS"}
                 , {"11679", "2004-GALA"}
         };
-        List<String[]> infos = new ArrayList<>();
+        List<DataMusic> infos = new ArrayList<>();
         for (String[] i : item) {
             try {
                 infos.addAll(create(STORE, i[0], i[1]));
@@ -87,20 +89,18 @@ public class GetAlbumList {
                 e.printStackTrace();
             }
         }
-        if (!STORE) {
-            write(new File("D:/code/basic-java/src/main/resources/music/index.md"),
-                    "| 歌手 | 歌名 | 存储路径 | 是否存在 |\n| :--- | :--- | :--- | :---: |\n" +
-                            infos.stream().map(line -> "| " + String.join(" | ", line) + " |").collect(Collectors.joining("\n")));
-        }
+        JdbcSimpleUtils<DataMusic> db = JdbcSimpleUtils.instance("jdbc:sqlite:D:/code/basic-java/backup/index.db", DataMusic.class);
+        List<DataMusic> exist = db.list();
+        db.insertOrUpdate(infos);
     }
 
-    public static List<String[]> create(boolean store, String userId, String userName) throws IOException {
-        List<String[]> res = new ArrayList<>();
+    public static List<DataMusic> create(boolean store, String userId, String userName) throws IOException {
+        List<DataMusic> res = new ArrayList<>();
         if (userId == null || userName == null) {
             return res;
         }
         // 创建内容
-        String folder = "D:/code/basic-java/src/main/resources/music/" + userId;
+        String folder = "D:/code/basic-java/backup/music/" + userId;
         boolean success = new File(folder).mkdir();
         if (!success) {
             System.out.println(folder + "  >>>>  已创建");
@@ -163,9 +163,20 @@ public class GetAlbumList {
                 Elements elements = albumDoc.getElementById("song-list-pre-cache").getElementsByTag("a");
                 for (Element music : elements) {
                     // 列出专辑歌曲
-                    String musicName = music.text().trim().replaceAll(" / ", "&").replaceAll("/", "&");
+                    String musicHref = music.attributes().get("href");
+                    String musicId = musicHref.split("id=")[1];
+                    String musicName = userName.split("-")[1] + " - " + music.text().trim().replaceAll(" / ", "&").replaceAll("/", "&");
                     String musicPath = folderPath + "/" + musicName + ".mp3";
-                    String[] infoItem = new String[]{userName, musicName, musicPath, "404"};
+                    DataMusic infoItem = new DataMusic();
+                    infoItem.setId(musicId);
+                    infoItem.setName(music.text().trim());
+                    infoItem.setAlbumId(albumId);
+                    infoItem.setAlbumName(album.text().trim());
+                    infoItem.setBirthYear(userName.split("-")[0]);
+                    infoItem.setArtId(userId);
+                    infoItem.setArtName(userName.split("-")[1]);
+                    infoItem.setPath(musicPath);
+                    infoItem.setStatus("404");
                     res.add(infoItem);
 
                     File musicFile = new File(musicPath);
@@ -179,7 +190,7 @@ public class GetAlbumList {
                         }
                     } else {
                         musicBkFile.deleteOnExit();
-                        infoItem[3] = "exists";
+                        infoItem.setStatus("exists");
                     }
                 }
             } catch (Exception e) {
