@@ -47,51 +47,19 @@ public class BattleshipsInABoard {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int countBattleships(char[][] board) {
-        int row = board.length;
-        int col = board[0].length;
-        int total = 0;
+        int res = 0;
+        int row = board.length, col = board[0].length;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                if (board[i][j] == 'X') {
-                    total++;
-                    countBattleships(board, i, j, row, col);
+                // 如果左和上没有，就认为是一只新的虫子
+                if (board[i][j] == 'X' &&
+                        (i == 0 || board[i - 1][j] != 'X')
+                        && (j == 0 || board[i][j - 1] != 'X')) {
+                    res++;
                 }
             }
         }
-        return total;
-    }
-
-    public void countBattleships(char[][] board, int i, int j, int row, int col) {
-        if (i < 0 || i >= row || j < 0 || j >= col || board[i][j] == '.') {
-            return;
-        }
-        board[i][j] = '.';
-        countBattleships(board, i - 1, j, row, col);
-        countBattleships(board, i + 1, j, row, col);
-        countBattleships(board, i, j - 1, row, col);
-        countBattleships(board, i, j + 1, row, col);
+        return res;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
-
-class Solution_Perfect {
-    public int countBattleships(char[][] board) {
-        int row = board.length;
-        int col = board[0].length;
-        int sum = 0;
-        for (int i = 0; i < row; i++)
-            for (int j = 0; j < col; j++) {
-                // ps: 当一只战舰的左边或上边为'X' 表示该点所在的战舰已经计数
-                if (board[i][j] == 'X') {
-                    sum++;
-                    if (j - 1 >= 0 && board[i][j - 1] == 'X') {
-                        sum--;
-                    }
-                    if (i - 1 >= 0 && board[i - 1][j] == 'X') {
-                        sum--;
-                    }
-                }
-            }
-        return sum;
-    }
-}
