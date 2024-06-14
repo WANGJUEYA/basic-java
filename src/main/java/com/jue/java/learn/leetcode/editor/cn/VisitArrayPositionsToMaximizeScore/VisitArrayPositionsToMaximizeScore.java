@@ -68,10 +68,7 @@ class Solution {
         dp[(nums[0] + 1) % 2] = -x;
         for (int num : nums) {
             int index = num % 2;
-            int indexReverse = (index + 1) % 2;
-            long next = dp[index] + num;
-            long nextN = dp[indexReverse] + num - x;
-            dp[index] = Math.max(next, nextN);
+            dp[index] = Math.max(dp[index] + num, dp[1 - index] + num - x);
         }
         return Math.max(dp[0], dp[1]);
     }
