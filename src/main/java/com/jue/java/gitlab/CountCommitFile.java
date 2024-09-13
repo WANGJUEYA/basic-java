@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class CountCommitFile {
 
     public static final String URL_PREFIX = "http://192.168.104.54/api/v4";
-    public static final String PRIVATE_TOKEN = "raJEdUYoAkdRM7tPyYNo";
+    public static final String PRIVATE_TOKEN = "q6SxqCd7zj9sCGNSfzyU";
     public static final boolean USE_STORE = false;
     public static final String START_DAY = "2024-06-26T00:00:00.000+08:00";
     public static final String END_DAY = "2024-09-13T00:00:00.000+08:00";
