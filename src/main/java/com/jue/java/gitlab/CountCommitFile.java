@@ -2,6 +2,7 @@ package com.jue.java.gitlab;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.python.google.common.io.CharStreams;
 
 import java.io.*;
@@ -22,13 +23,14 @@ import java.util.stream.Collectors;
  *
  * @author JUE
  */
+@Slf4j
 public class CountCommitFile {
 
-    public static final String URL_PREFIX = "https://192.168.100.49:8081/api/v4";
+    public static final String URL_PREFIX = "http://192.168.104.54/api/v4";
     public static final String PRIVATE_TOKEN = "raJEdUYoAkdRM7tPyYNo";
     public static final boolean USE_STORE = false;
-    public static final String START_DAY = "2024-06-14T00:00:00.000+08:00";
-    public static final String END_DAY = "2024-06-21T00:00:00.000+08:00";
+    public static final String START_DAY = "2024-06-26T00:00:00.000+08:00";
+    public static final String END_DAY = "2024-09-13T00:00:00.000+08:00";
 
     public static void main(String[] args) {
         CountCommitFile countCommitFile = new CountCommitFile();
@@ -158,6 +160,8 @@ public class CountCommitFile {
     private String getJsonStr(String url) {
         // url拼接：String finalUrl = URL_PREFIX + url + (url.contains("?") ? "&" : "?") + "private_token=" + PRIVATE_TOKEN;
         try {
+
+            log.debug(url);
             SslUtils.ignoreSsl();
             HttpURLConnection connection = (HttpURLConnection) new URL(URL_PREFIX + url).openConnection();
             // 设置请求方法
